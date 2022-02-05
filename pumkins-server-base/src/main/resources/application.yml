@@ -1,0 +1,50 @@
+server:
+  port: 14000
+
+spring:
+  application:
+    name: pumkins-server-base
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 106.55.165.94:8848
+
+  datasource:
+    name: baseServiceDataSource
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#    url: jdbc:mysql://106.55.165.94:3306/pumkins_base?useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true&sessionVariables=FOREIGN_KEY_CHECKS=0&useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
+    url: jdbc:log4jdbc:mysql://106.55.165.94:3306/pumkins_base?useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true&sessionVariables=FOREIGN_KEY_CHECKS=0&useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
+    username: root
+    password: root
+    hikari:
+      maximum-pool-size: 100
+      minimum-idle: 8
+      connection-timeout: 60000
+      idle-timeout: 600000 # 链接空闲多久被删除
+      max-lifetime: 1800000 # 链接最大生存时间
+
+    jpa:
+      database: MYSQL
+      properties:
+        javax.persistence.sharedCache.mode: ENABLE_SELECTIVE
+        hibernate:
+          hbm2ddl.auto: none # validate 启动程序时只做校验，不会更改表结构
+          dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+          format_sql: false
+          show_sql: true
+          cache.use_query_cache: true
+          cache.use_second_level_cache: true
+          cache.region.factory_class: ehcache
+          cache.ehcache.missing_cache_strategy: create
+          hibernate.javax.cache.uri: ehcache.xml
+          jdbc.batch_size: 5000
+          jdbc.batch_versioned_data: true
+          order_inserts: true
+          order_updates: true
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8

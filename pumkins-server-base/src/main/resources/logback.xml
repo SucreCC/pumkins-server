@@ -1,0 +1,78 @@
+<configuration>
+    <property name="log.path" value="./logs" />
+    <property name="log.pattern" value="[%d{yyyy-MM-dd HH:mm:ss}] %-5level [%thread] %logger{50} - %msg%n" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/system.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./logs/system.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>360</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./logs/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>360</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+<!--    <appender name="RocketMQTraceAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <file>${log.path}/base-rocket-mq-trace.log</file>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>./logs/base-rocket-mq-trace-%d{yyyy-MM-dd}.log</fileNamePattern>-->
+<!--            <maxHistory>360</maxHistory>-->
+<!--        </rollingPolicy>-->
+<!--        <encoder>-->
+<!--            <pattern>${log.pattern}</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    <appender name="MaterialLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <file>${log.path}/base-material.log</file>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>./logs/base-material-%d{yyyy-MM-dd}.log</fileNamePattern>-->
+<!--            <maxHistory>360</maxHistory>-->
+<!--        </rollingPolicy>-->
+<!--        <encoder>-->
+<!--            <pattern>${log.pattern}</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    <logger name="ROCKET_MQ_TRACE" level="INFO" additivity="false">-->
+<!--        <appender-ref ref="RocketMQTraceAppender"/>-->
+<!--    </logger>-->
+
+<!--    <logger name="MATERIAL_LOG" level="INFO" additivity="false">-->
+<!--        <appender-ref ref="MaterialLogAppender"/>-->
+<!--    </logger>-->
+
+    <!--设置为OFF,即屏蔽; 留下sqltiming作为INFO级别输出-->
+    <logger name="jdbc.connection" level="OFF"/>
+    <logger name="jdbc.resultset" level="OFF"/>
+    <logger name="jdbc.resultsettable" level="OFF"/>
+    <logger name="jdbc.audit" level="OFF"/>
+    <logger name="jdbc.sqltiming" level="OFF"/>
+    <logger name="jdbc.sqlonly" level="INFO"/>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="ERROR" />
+    </root>
+
+</configuration>
