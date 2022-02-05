@@ -29,5 +29,5 @@ fgmp-server-frontkit/target/
 logs/
 *.iml
 data/
-*.sql
+#*.sql
 target/

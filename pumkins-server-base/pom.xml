@@ -94,6 +94,12 @@
             <artifactId>thumbnailator</artifactId>
             <version>${thumbnailator.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.pumkins</groupId>
+            <artifactId>pumkins-server-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!--RocketMQ配置-->
         <!--        <dependency>-->

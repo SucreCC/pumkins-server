@@ -13,7 +13,9 @@ import lombok.experimental.Accessors;
 public class BlogReq {
     private Integer id;
     private String img;
-    private String heading;
-    private String blogDate;
-    private String blogDetail;
+    private String title;
+    private String blogDescribe;
+    private String content;
+    private String createDate;
+    private String updateDate;
 }
