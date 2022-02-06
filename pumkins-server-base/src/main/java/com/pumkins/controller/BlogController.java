@@ -1,7 +1,9 @@
 package com.pumkins.controller;
 
 import com.pumkins.dto.request.BlogReq;
+import com.pumkins.resp.JsonResp;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("pumkins/blog")
 public class BlogController {
     @PostMapping("/save")
-    public void saveBlog(BlogReq blogReq){
-        System.out.println("1111");
+    public JsonResp<BlogReq> saveBlog(@RequestBody BlogReq blogReq){
+        return JsonResp.success(blogReq);
     }
 }
