@@ -2,7 +2,6 @@ package com.pumkins.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 
 /**
  * @author: dengKai
@@ -12,5 +11,5 @@ import java.io.IOException;
 
 public interface WordsService {
 
-    void addTodayWords(MultipartFile multipartFile) throws IOException;
+    void addTodayWords(MultipartFile multipartFile, Integer theDay);
 }
