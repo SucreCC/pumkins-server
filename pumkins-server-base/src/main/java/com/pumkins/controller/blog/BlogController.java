@@ -1,4 +1,4 @@
-package com.pumkins.controller;
+package com.pumkins.controller.blog;
 
 import com.pumkins.dto.request.BlogReq;
 import com.pumkins.resp.JsonResp;
