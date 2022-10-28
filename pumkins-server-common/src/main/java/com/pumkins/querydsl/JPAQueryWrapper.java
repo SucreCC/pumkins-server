@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * @author 刘旭
+ * @author Sucre
  * @date 2021-03-29 20:27:06
  * <p>
  * 包装JPAQuery类，实现动态的SQL操作,处理类似于

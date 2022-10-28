@@ -1,11 +1,13 @@
 package com.pumkins.config.db;
 
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * @author: dengKai
@@ -17,9 +19,13 @@ import javax.persistence.EntityManager;
  */
 @Configuration
 public class JPAQueryFactoryConfig {
-    @Bean
+
+    @PersistenceContext
     @Autowired
-    public JPAQueryFactory jpaQueryFactory(EntityManager entityManager){
+    private EntityManager entityManager;
+
+    @Bean(name = "jpaQueryFactory")
+    public JPAQueryFactory jpaQueryFactory(){
         return new JPAQueryFactory(entityManager);
     }
 }

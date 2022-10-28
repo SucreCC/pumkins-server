@@ -4,19 +4,21 @@ server:
 spring:
   application:
     name: pumkins-server-base
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 106.55.165.94:8848
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 106.55.165.94:8848
 
   datasource:
     name: baseServiceDataSource
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-#    url: jdbc:mysql://106.55.165.94:3306/pumkins_base?useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true&sessionVariables=FOREIGN_KEY_CHECKS=0&useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
-    url: jdbc:log4jdbc:mysql://106.55.165.94:3306/pumkins_base?useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true&sessionVariables=FOREIGN_KEY_CHECKS=0&useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:mysql://159.138.149.31 :3306/pumkins_base?useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true&sessionVariables=FOREIGN_KEY_CHECKS=0&useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
+#    url: jdbc:log4jdbc:mysql://159:138:149:31:3306/pumkins_base?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+
+
     username: root
-    password: root
+    password: 123456
     hikari:
       maximum-pool-size: 100
       minimum-idle: 8
@@ -48,3 +50,7 @@ spring:
       fail-on-empty-beans: false
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+
+
+
+
