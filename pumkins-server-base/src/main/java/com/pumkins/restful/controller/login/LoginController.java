@@ -30,8 +30,8 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public JsonResp<User> register(@RequestBody RegisterReq registerReq) {
-        return JsonResp.success(loginService.register(registerReq));
+    public JsonResp<UserResp> register(@RequestBody RegisterReq registerReq) {
+        return JsonResp.success(UserResp.build(loginService.register(registerReq)));
     }
 }
 

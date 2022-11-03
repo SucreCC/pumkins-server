@@ -1,7 +1,9 @@
 package com.pumkins.dto.resp;
 
+import com.pumkins.entity.User;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.beans.BeanUtils;
 
 /**
  * @author: dengKai
@@ -16,4 +18,10 @@ public class UserResp {
     private String password;
     private String email;
     private String icon;
+
+    public static UserResp build(User user){
+        UserResp userResp = new UserResp();
+        BeanUtils.copyProperties(user,userResp);
+        return userResp;
+    }
 }
