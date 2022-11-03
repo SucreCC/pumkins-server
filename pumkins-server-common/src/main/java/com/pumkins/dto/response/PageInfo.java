@@ -1,4 +1,4 @@
-package com.pumkins.resp;
+package com.pumkins.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

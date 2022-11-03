@@ -1,7 +1,7 @@
-package com.pumkins.controller.blog;
+package com.pumkins.restful.controller.blog;
 
 import com.pumkins.dto.request.BlogReq;
-import com.pumkins.resp.JsonResp;
+import com.pumkins.dto.response.JsonResp;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package com.pumkins.resp;
+package com.pumkins.dto.response;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.util.Assert;

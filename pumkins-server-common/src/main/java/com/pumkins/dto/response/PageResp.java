@@ -1,4 +1,4 @@
-package com.pumkins.resp;
+package com.pumkins.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -26,10 +26,10 @@ public class PageResp<T> extends JsonResp<T> {
 
 
     public PageResp() {
-        super(JsonResp.SUCCESS_STATUS, (T) Collections.<T>emptyList());
+        super(SUCCESS_STATUS, (T) Collections.<T>emptyList());
     }
     public PageResp(long total, T data) {
-        super(JsonResp.SUCCESS_STATUS, data);
+        super(SUCCESS_STATUS, data);
         this.total = total;
     }
 

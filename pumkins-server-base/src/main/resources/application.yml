@@ -4,10 +4,7 @@ server:
 spring:
   application:
     name: pumkins-server-base
-#  cloud:
-#    nacos:
-#      discovery:
-#        server-addr: 106.55.165.94:8848
+
 
   datasource:
     name: baseServiceDataSource
