@@ -1,7 +1,7 @@
 package com.pumkins.restful.service.login;
 
 import com.pumkins.dto.request.RegisterReq;
-import com.pumkins.entity.User;
+import com.pumkins.dto.resp.UserResp;
 
 /**
  * @Author: dengKai
@@ -12,5 +12,5 @@ import com.pumkins.entity.User;
 public interface LoginService {
     void login();
 
-    User register(RegisterReq registerReq);
+    UserResp register(RegisterReq registerReq);
 }

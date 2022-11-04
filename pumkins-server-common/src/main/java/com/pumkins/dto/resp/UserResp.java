@@ -17,9 +17,10 @@ import java.util.Objects;
 public class UserResp {
     private Integer id;
     private String username;
-    private String password;
     private String email;
     private String icon;
+    private String role;
+    private String token;
 
     public static UserResp build(User user) {
         UserResp userResp = new UserResp();

@@ -39,6 +39,9 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "role", nullable = false)
+    private String role;
+
     @Column(name = "create_date", nullable = false)
     private Date createDate;
 

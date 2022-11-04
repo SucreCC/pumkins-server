@@ -6,11 +6,14 @@ import com.pumkins.dto.resp.UserResp;
 import com.pumkins.dto.response.JsonResp;
 import com.pumkins.entity.User;
 import com.pumkins.restful.service.login.LoginService;
+import com.pumkins.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author: dengKai
@@ -30,8 +33,10 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public JsonResp<UserResp> register(@RequestBody RegisterReq registerReq) {
-        return JsonResp.success(UserResp.build(loginService.register(registerReq)));
+    public JsonResp<UserResp> register(@RequestBody RegisterReq registerReq, HttpServletResponse response) {
+        UserResp register = loginService.register(registerReq);
+        response.setHeader(JwtUtil.AUTH_HEAD_KEY, register.getToken());
+        return JsonResp.success(register);
     }
 }
 

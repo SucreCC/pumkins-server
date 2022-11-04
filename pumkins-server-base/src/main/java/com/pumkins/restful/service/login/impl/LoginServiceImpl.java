@@ -1,12 +1,16 @@
 package com.pumkins.restful.service.login.impl;
 
+import com.auth0.jwt.JWT;
+import com.pumkins.dto.enus.RoleType;
 import com.pumkins.dto.request.RegisterReq;
+import com.pumkins.dto.resp.UserResp;
 import com.pumkins.entity.User;
 import com.pumkins.repository.UserRepository;
 import com.pumkins.restful.service.login.LoginService;
 import com.pumkins.restful.service.user.UserService;
+import com.pumkins.util.JwtUtil;
+import com.pumkins.util.PasswordUtil;
 import com.querydsl.core.QueryFactory;
-import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,8 +42,15 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public User register(RegisterReq registerReq) {
-        return existUser(registerReq) ? null : userService.registerUser(buildUser(registerReq));
+    public UserResp register(RegisterReq registerReq) {
+
+        UserResp userResp = new UserResp();
+
+        if (!existUser(registerReq)) {
+            userResp = UserResp.build(userService.registerUser(buildUser(registerReq)));
+            userResp.setToken(JwtUtil.buildJwtToken(userResp));
+        }
+        return userResp;
     }
 
     private Boolean existUser(RegisterReq registerReq) {
@@ -49,8 +60,9 @@ public class LoginServiceImpl implements LoginService {
     private User buildUser(RegisterReq registerReq) {
         return new User()
             .setUsername(registerReq.getUsername())
-            .setPassword(registerReq.getPassword())
+            .setPassword(PasswordUtil.encode(registerReq.getPassword()))
             .setEmail(registerReq.getEmail())
+            .setRole(RoleType.NORMAL.getIndex().toString())
             .setIcon(DEFAULT_USER_ICON)
             .setCreateDate(new Date())
             .setUpdateDate(new Date());
