@@ -111,11 +111,11 @@
             <version>${org.apache.poi.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${org.apache.logging.log4j.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.logging.log4j</groupId>-->
+<!--            <artifactId>log4j-slf4j-impl</artifactId>-->
+<!--            <version>${org.apache.logging.log4j.version}</version>-->
+<!--        </dependency>-->
 
 
         <!--RocketMQ配置-->

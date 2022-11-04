@@ -17,7 +17,6 @@ import java.util.Date;
  * @date: 2022/11/03 22:20
  * @description: TODO
  */
-@Log4j
 @Component
 public class LoginServiceImpl implements LoginService {
     private static final String DEFAULT_USER_ICON = "assets/my-assets/images/user/default-icon.png";

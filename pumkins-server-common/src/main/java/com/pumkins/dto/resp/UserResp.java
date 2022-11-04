@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.beans.BeanUtils;
 
+import java.util.Objects;
+
 /**
  * @author: dengKai
  * @date: 2022/11/04 00:29
@@ -19,9 +21,11 @@ public class UserResp {
     private String email;
     private String icon;
 
-    public static UserResp build(User user){
+    public static UserResp build(User user) {
         UserResp userResp = new UserResp();
-        BeanUtils.copyProperties(user,userResp);
+        if (Objects.nonNull(user)) {
+            BeanUtils.copyProperties(user, userResp);
+        }
         return userResp;
     }
 }
