@@ -1,7 +1,7 @@
 package com.pumkins.restful.service.login.impl;
 
-import com.auth0.jwt.JWT;
 import com.pumkins.dto.enus.RoleType;
+import com.pumkins.dto.request.LoginReq;
 import com.pumkins.dto.request.RegisterReq;
 import com.pumkins.dto.resp.UserResp;
 import com.pumkins.entity.User;
@@ -14,6 +14,8 @@ import com.querydsl.core.QueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 /**
@@ -37,18 +39,22 @@ public class LoginServiceImpl implements LoginService {
 
 
     @Override
-    public void login() {
-
+    public Boolean login(LoginReq loginReq, HttpServletRequest request, HttpServletResponse response) {
+        User user = userService.selectByUserName(loginReq.getUsername());
+        boolean isMatching = PasswordUtil.matching(loginReq.getPassword(), user.getPassword());
+        if (isMatching) {
+            bindTokenToResponseHeader(UserResp.build(user), response);
+        }
+        return isMatching;
     }
 
+
     @Override
-    public UserResp register(RegisterReq registerReq) {
-
+    public UserResp register(RegisterReq registerReq, HttpServletResponse response) {
         UserResp userResp = new UserResp();
-
         if (!existUser(registerReq)) {
             userResp = UserResp.build(userService.registerUser(buildUser(registerReq)));
-            userResp.setToken(JwtUtil.buildJwtToken(userResp));
+            bindTokenToResponseHeader(userResp, response);
         }
         return userResp;
     }
@@ -67,4 +73,9 @@ public class LoginServiceImpl implements LoginService {
             .setCreateDate(new Date())
             .setUpdateDate(new Date());
     }
+
+    private void bindTokenToResponseHeader(UserResp userResp, HttpServletResponse response) {
+        response.setHeader(JwtUtil.AUTH_HEAD_KEY, JwtUtil.buildJwtToken(userResp));
+    }
+
 }

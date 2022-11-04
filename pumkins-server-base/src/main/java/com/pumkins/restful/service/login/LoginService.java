@@ -1,7 +1,11 @@
 package com.pumkins.restful.service.login;
 
+import com.pumkins.dto.request.LoginReq;
 import com.pumkins.dto.request.RegisterReq;
 import com.pumkins.dto.resp.UserResp;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author: dengKai
@@ -10,7 +14,7 @@ import com.pumkins.dto.resp.UserResp;
  */
 
 public interface LoginService {
-    void login();
+    Boolean login(LoginReq loginReq, HttpServletRequest request, HttpServletResponse response);
 
-    UserResp register(RegisterReq registerReq);
+    UserResp register(RegisterReq registerReq, HttpServletResponse response);
 }

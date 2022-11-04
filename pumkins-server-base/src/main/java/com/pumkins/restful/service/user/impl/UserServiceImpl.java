@@ -1,5 +1,6 @@
 package com.pumkins.restful.service.user.impl;
 
+import com.pumkins.dto.resp.UserResp;
 import com.pumkins.entity.QUser;
 import com.pumkins.entity.User;
 import com.pumkins.querydsl.JPAQueryWrapper;
@@ -44,5 +45,13 @@ public class UserServiceImpl implements UserService {
             .build()
             .fetch();
         return !CollectionUtils.isEmpty(userList);
+    }
+
+    @Override
+    public User selectByUserName(String username) {
+        return JPAQueryWrapper.create(jpaQueryFactory.selectFrom(qUser))
+            .where(qUser.username.eq(username))
+            .build()
+            .fetchOne();
     }
 }

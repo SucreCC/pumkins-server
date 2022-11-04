@@ -20,7 +20,6 @@ public class UserResp {
     private String email;
     private String icon;
     private String role;
-    private String token;
 
     public static UserResp build(User user) {
         UserResp userResp = new UserResp();

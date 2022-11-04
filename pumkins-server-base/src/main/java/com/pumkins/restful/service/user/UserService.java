@@ -1,5 +1,6 @@
 package com.pumkins.restful.service.user;
 
+import com.pumkins.dto.resp.UserResp;
 import com.pumkins.entity.User;
 
 /**
@@ -12,4 +13,6 @@ public interface UserService {
     User registerUser(User user);
 
     Boolean selectByUserNameAndEmail(String username, String email);
+
+    User selectByUserName(String username);
 }

@@ -4,15 +4,14 @@ import com.pumkins.dto.request.LoginReq;
 import com.pumkins.dto.request.RegisterReq;
 import com.pumkins.dto.resp.UserResp;
 import com.pumkins.dto.response.JsonResp;
-import com.pumkins.entity.User;
 import com.pumkins.restful.service.login.LoginService;
-import com.pumkins.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -28,15 +27,13 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
-    public JsonResp<String> login(@RequestBody LoginReq loginReq) {
-        return JsonResp.success();
+    public JsonResp<Boolean> login(@RequestBody LoginReq loginReq, HttpServletResponse response, HttpServletRequest request) {
+        return JsonResp.success(loginService.login(loginReq, request, response));
     }
 
     @PostMapping("/register")
     public JsonResp<UserResp> register(@RequestBody RegisterReq registerReq, HttpServletResponse response) {
-        UserResp register = loginService.register(registerReq);
-        response.setHeader(JwtUtil.AUTH_HEAD_KEY, register.getToken());
-        return JsonResp.success(register);
+        return JsonResp.success(loginService.register(registerReq, response));
     }
 }
 
