@@ -27,7 +27,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
-    public JsonResp<Boolean> login(@RequestBody LoginReq loginReq, HttpServletResponse response, HttpServletRequest request) {
+    public JsonResp<UserResp> login(@RequestBody LoginReq loginReq, HttpServletResponse response, HttpServletRequest request) {
         return JsonResp.success(loginService.login(loginReq, request, response));
     }
 

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 public interface LoginService {
-    Boolean login(LoginReq loginReq, HttpServletRequest request, HttpServletResponse response);
+    UserResp login(LoginReq loginReq, HttpServletRequest request, HttpServletResponse response);
 
     UserResp register(RegisterReq registerReq, HttpServletResponse response);
 }

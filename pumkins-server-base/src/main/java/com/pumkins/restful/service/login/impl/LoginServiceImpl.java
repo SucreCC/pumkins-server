@@ -39,13 +39,14 @@ public class LoginServiceImpl implements LoginService {
 
 
     @Override
-    public Boolean login(LoginReq loginReq, HttpServletRequest request, HttpServletResponse response) {
+    public UserResp login(LoginReq loginReq, HttpServletRequest request, HttpServletResponse response) {
         User user = userService.selectByUserName(loginReq.getUsername());
         boolean isMatching = PasswordUtil.matching(loginReq.getPassword(), user.getPassword());
         if (isMatching) {
             bindTokenToResponseHeader(UserResp.build(user), response);
+            return UserResp.build(user);
         }
-        return isMatching;
+        return null;
     }
 
 
