@@ -25,8 +25,6 @@ import java.util.Date;
  */
 @Component
 public class LoginServiceImpl implements LoginService {
-    private static final String DEFAULT_USER_ICON = "assets/my-assets/images/user/default-icon.png";
-
 
     @Autowired
     private UserRepository userRepository;
@@ -69,8 +67,8 @@ public class LoginServiceImpl implements LoginService {
             .setUsername(registerReq.getUsername())
             .setPassword(PasswordUtil.encode(registerReq.getPassword()))
             .setEmail(registerReq.getEmail())
-            .setRole(RoleType.NORMAL.getIndex().toString())
-            .setIcon(DEFAULT_USER_ICON)
+            .setRole(RoleType.NORMAL.getName())
+            .setIcon(registerReq.getIcon())
             .setCreateDate(new Date())
             .setUpdateDate(new Date());
     }
