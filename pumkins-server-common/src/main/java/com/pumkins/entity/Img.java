@@ -13,35 +13,35 @@ import java.util.Date;
 
 /**
  * @author: dengKai
- * @date: 2022/02/05 23:23
- * @description:
+ * @date: 2023/01/14 10:00
+ * @description: TODO
  */
-
 @Entity
-@Table(name = "pumkins_blog")
+@Table(name = "pumkins_img")
 @Data
 @Accessors(chain = true)
-public class Blog {
+public class Img {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
 
-    @Column(name = "category_id", nullable = false)
-    private Integer categoryId;
+    @Column(name = "md5", nullable = false)
+    private String md5;
 
-    @Column(name = "title", nullable = false)
-    private String title;
+    @Column(name = "size", nullable = false)
+    private Long size;
 
-    @Column(name = "blog_describe", nullable = false)
-    private String blogDescribe;
+    @Column(name = "suffix", nullable = false)
+    private String suffix;
 
-    @Column(name = "content", nullable = false)
-    private String content;
+    @Column(name = "img_name", nullable = false)
+    private String imgName;
 
     @Column(name = "create_date", nullable = false)
     private Date createDate;
 
     @Column(name = "update_date")
     private Date updateDate;
+
 }

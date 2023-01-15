@@ -19,6 +19,7 @@
         <hibernate-cache.version>5.4.7.Final</hibernate-cache.version>
         <log4jdbc-log4j2-jdbc4.1.version>1.16</log4jdbc-log4j2-jdbc4.1.version>
         <pinyin4j.vesion>2.5.1</pinyin4j.vesion>
+        <minion.version>8.4.3</minion.version>
     </properties>
 
     <dependencies>
@@ -179,6 +180,19 @@
             <groupId>org.attoparser</groupId>
             <artifactId>attoparser</artifactId>
             <version>2.0.5.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.minio/minio -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minion.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>7.1.2</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

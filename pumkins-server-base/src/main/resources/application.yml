@@ -50,5 +50,12 @@ spring:
     time-zone: GMT+8
 
 
+minio:
+  host: http://159.138.149.31:9800/
+  accessKey: fXGgJIUIKfJXY9lz
+  secretKey: bA0YmxraQNbtKNwJKUfVh25qCQBFgYnw
+  username: admin
+  password: admin123456
+
 
 
