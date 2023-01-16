@@ -27,21 +27,49 @@ public class Blog {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "category_id", nullable = false)
-    private Integer categoryId;
-
     @Column(name = "title", nullable = false)
     private String title;
+
+    @Column(name = "tags", nullable = false)
+    private String tags;
+
+    @Column(name = "markdown", nullable = false)
+    private String markdown;
 
     @Column(name = "blog_describe", nullable = false)
     private String blogDescribe;
 
-    @Column(name = "content", nullable = false)
-    private String content;
+    @Column(name = "username", nullable = false)
+    private String username;
+
+    @Column(name = "images", nullable = false)
+    private String images;
+
+    @Column(name = "is_visible", nullable = false)
+    private Boolean isVisible;
+
+    @Column(name = "category_id", nullable = false)
+    private String categoryId;
+
+    @Column(name = "work_or_life", nullable = false)
+    private Boolean workOrLife;
 
     @Column(name = "create_date", nullable = false)
     private Date createDate;
 
     @Column(name = "update_date")
     private Date updateDate;
+
+    @Column(name = "number_of_thumb_up ")
+    private Integer numberOfThumbUp;
+
+    @Column(name = "number_of_view")
+    private Integer numberOfView;
+
+    @Column(name = "number_of_comment")
+    private Integer numberOfComment;
+
+    @Column(name = "number_of_favorite")
+    private Integer numberOfFavorite;
+
 }

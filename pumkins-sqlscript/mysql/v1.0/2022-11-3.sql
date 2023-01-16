@@ -5,7 +5,6 @@
 
 
 drop table if exists pumkins_user;
-drop table if exists pumkins_user;
 create table pumkins_user
 (
     id          int auto_increment comment 'primary key' primary key,

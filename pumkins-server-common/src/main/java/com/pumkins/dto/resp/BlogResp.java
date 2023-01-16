@@ -1,14 +1,9 @@
-package com.pumkins.dto.request;
+package com.pumkins.dto.resp;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author: dengKai
@@ -17,15 +12,15 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class BlogReq {
+public class BlogResp {
 
     private Integer id;
     private String title;
-    private List<String> tags;
+    private String tags;
     private String markdown;
     private String blogDescribe;
     private String username;
-    private List<String> images;
+    private String images;
     private Boolean isVisible;
     private String categoryIid;
     private Boolean workOrLife;
