@@ -1,6 +1,8 @@
 package com.pumkins.restful.service.blog;
 
 
+import com.pumkins.dto.request.BlogReq;
+import com.pumkins.dto.resp.ImgResp;
 import io.minio.errors.ErrorResponseException;
 import io.minio.errors.InsufficientDataException;
 import io.minio.errors.InternalException;
@@ -21,5 +23,7 @@ import java.security.NoSuchAlgorithmException;
  */
 
 public interface BlogService {
-    String uploadImg(MultipartFile file) throws IOException, ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException;
+    ImgResp uploadImg(MultipartFile file) throws IOException, ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException;
+
+    void saveBlog(BlogReq blogReq);
 }

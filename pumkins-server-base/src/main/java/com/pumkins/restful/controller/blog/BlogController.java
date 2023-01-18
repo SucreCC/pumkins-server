@@ -1,8 +1,10 @@
 package com.pumkins.restful.controller.blog;
 
 import com.pumkins.dto.request.BlogReq;
+import com.pumkins.dto.resp.ImgResp;
 import com.pumkins.dto.response.JsonResp;
 import com.pumkins.restful.service.blog.BlogService;
+import com.pumkins.restful.service.tags.TagsService;
 import io.minio.errors.ErrorResponseException;
 import io.minio.errors.InsufficientDataException;
 import io.minio.errors.InternalException;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 /**
  * @author: dengKai
@@ -34,13 +37,24 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
-    @PostMapping("/save")
-    public JsonResp<BlogReq> saveBlog(@RequestBody BlogReq blogReq){
+    @Autowired
+    private TagsService tagsService;
+
+    @PostMapping("/save-blog")
+    public JsonResp<BlogReq> saveBlog(@RequestBody BlogReq blogReq) {
+        blogService.saveBlog(blogReq);
         return JsonResp.success(blogReq);
     }
 
     @PostMapping("/blog-picture")
-    public JsonResp<String> update(@RequestParam("file") MultipartFile file) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException, InvalidBucketNameException {
-        return JsonResp.success(blogService.uploadImg(file));
+    public JsonResp<Integer> uploadImages(@RequestParam("file") MultipartFile file) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException, InvalidBucketNameException {
+        ImgResp imgResp = blogService.uploadImg(file);
+        return JsonResp.success(imgResp.getId());
+    }
+
+
+    @PostMapping("/save-tags")
+    public JsonResp<List<Integer>> saveTags(@RequestBody List<String> tags) {
+        return JsonResp.success(tagsService.saveTags(tags));
     }
 }

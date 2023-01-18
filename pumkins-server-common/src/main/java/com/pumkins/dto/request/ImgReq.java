@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 public class ImgReq {
-    private Long id;
+    private Integer id;
     private String md5;
     private Long size;
     private String suffix;

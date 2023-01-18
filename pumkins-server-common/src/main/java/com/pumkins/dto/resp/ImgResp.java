@@ -16,7 +16,7 @@ import java.util.Objects;
 @Accessors(chain = true)
 public class ImgResp {
 
-    private Long id;
+    private Integer id;
     private String md5;
     private Long size;
     private String suffix;

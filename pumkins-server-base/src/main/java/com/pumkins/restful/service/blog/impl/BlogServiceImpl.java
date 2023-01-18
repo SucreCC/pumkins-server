@@ -1,10 +1,14 @@
 package com.pumkins.restful.service.blog.impl;
 
+import com.pumkins.dto.request.BlogReq;
 import com.pumkins.dto.request.ImgReq;
 import com.pumkins.dto.resp.ImgResp;
+import com.pumkins.repository.BlogRepository;
 import com.pumkins.restful.service.blog.BlogService;
 import com.pumkins.restful.service.img.ImgService;
+import com.pumkins.restful.service.tags.TagsService;
 import com.pumkins.util.MinionUtils;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.minio.errors.ErrorResponseException;
 import io.minio.errors.InsufficientDataException;
 import io.minio.errors.InternalException;
@@ -22,6 +26,7 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -38,15 +43,24 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     private MinionUtils minionUtils;
 
+    @Autowired
+    private JPAQueryFactory jpaQueryFactory;
+
+    @Autowired
+    private BlogRepository blogRepository;
+
+    @Autowired
+    private TagsService tagsService;
+
     @Override
-    public String uploadImg(MultipartFile file) throws IOException, ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+    public ImgResp uploadImg(MultipartFile file) throws IOException, ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         String md5 = DigestUtils.md5Hex(file.getInputStream());
         long size = file.getSize();
         String suffix = FilenameUtils.getExtension(file.getOriginalFilename());
         ImgResp imgResp = imgService.checkDuplicateImg(md5, size, suffix);
 
-        if (Objects.nonNull(imgResp.getImgName())){
-            return imgResp.getImgName();
+        if (Objects.nonNull(imgResp.getImgName())) {
+            return imgResp;
         }
 
         String newImgName = minionUtils.upload(file);
@@ -58,8 +72,17 @@ public class BlogServiceImpl implements BlogService {
             .setImgName(newImgName)
             .setCreateDate(new Date())
             .setUpdateDate(new Date());
-        imgService.save(imgReq);
+        ImgResp save = imgService.save(imgReq);
 
-        return imgReq.getImgName();
+        return save;
+    }
+
+    @Override
+    public void saveBlog(BlogReq blogReq) {
+        List<String> tags = blogReq.getTags();
+
+        tagsService.checkDuplicateTag(tags);
+
+
     }
 }

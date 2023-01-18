@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author: dengKai
@@ -16,13 +17,13 @@ public class BlogResp {
 
     private Integer id;
     private String title;
-    private String tags;
+    private List<String> tags;
     private String markdown;
     private String blogDescribe;
     private String username;
-    private String images;
+    private List<String> images;
     private Boolean isVisible;
-    private String categoryIid;
+    private String categoryId;
     private Boolean workOrLife;
     private Date createDate;
     private Date updateDate;

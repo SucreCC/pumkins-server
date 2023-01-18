@@ -1,5 +1,6 @@
 package com.pumkins.dto.request;
 
+import com.pumkins.entity.Blog;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -27,7 +28,7 @@ public class BlogReq {
     private String username;
     private List<String> images;
     private Boolean isVisible;
-    private String categoryIid;
+    private String categoryId;
     private Boolean workOrLife;
     private Date createDate;
     private Date updateDate;
