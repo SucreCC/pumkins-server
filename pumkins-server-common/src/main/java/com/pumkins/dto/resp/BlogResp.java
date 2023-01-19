@@ -31,4 +31,5 @@ public class BlogResp {
     private Integer numberOfView;
     private Integer numberOfComment;
     private Integer numberOfFavorite;
+    private Boolean isDraft;
 }

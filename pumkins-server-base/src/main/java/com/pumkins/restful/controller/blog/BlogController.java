@@ -1,9 +1,12 @@
 package com.pumkins.restful.controller.blog;
 
+import com.pumkins.dto.request.BlogCategoryReq;
 import com.pumkins.dto.request.BlogReq;
+import com.pumkins.dto.resp.BlogCategoryResp;
 import com.pumkins.dto.resp.ImgResp;
 import com.pumkins.dto.response.JsonResp;
 import com.pumkins.restful.service.blog.BlogService;
+import com.pumkins.restful.service.blogCategory.BlogCtegoryService;
 import com.pumkins.restful.service.tags.TagsService;
 import io.minio.errors.ErrorResponseException;
 import io.minio.errors.InsufficientDataException;
@@ -40,6 +43,9 @@ public class BlogController {
     @Autowired
     private TagsService tagsService;
 
+    @Autowired
+    private BlogCtegoryService blogCtegoryService;
+
     @PostMapping("/save-blog")
     public JsonResp<BlogReq> saveBlog(@RequestBody BlogReq blogReq) {
         blogService.saveBlog(blogReq);
@@ -56,5 +62,11 @@ public class BlogController {
     @PostMapping("/save-tags")
     public JsonResp<List<Integer>> saveTags(@RequestBody List<String> tags) {
         return JsonResp.success(tagsService.saveTags(tags));
+    }
+
+
+    @PostMapping("/save-category")
+    public JsonResp<BlogCategoryResp> saveCategory(@RequestBody BlogCategoryReq blogCategoryReq) {
+        return JsonResp.success(blogCtegoryService.saveCategory(blogCategoryReq));
     }
 }

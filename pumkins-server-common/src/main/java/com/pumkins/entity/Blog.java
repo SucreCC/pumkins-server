@@ -54,6 +54,9 @@ public class Blog {
     @Column(name = "work_or_life", nullable = false)
     private Boolean workOrLife;
 
+    @Column(name = "is_draft", nullable = false)
+    private Boolean isDraft;
+
     @Column(name = "create_date", nullable = false)
     private Date createDate;
 

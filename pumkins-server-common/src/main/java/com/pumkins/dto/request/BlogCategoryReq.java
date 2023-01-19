@@ -1,7 +1,10 @@
 package com.pumkins.dto.request;
 
+import com.pumkins.entity.BlogCategory;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.beans.BeanUtils;
+
 import java.util.Date;
 
 /**
@@ -18,4 +21,10 @@ public class BlogCategoryReq {
     private Integer value;
     private Date createDate;
     private Date updateDate;
+
+    public BlogCategory convertToBlogCategory(){
+        BlogCategory blogCategory = new BlogCategory();
+        BeanUtils.copyProperties(this,blogCategory);
+        return blogCategory;
+    }
 }
