@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author: dengKai
@@ -41,7 +44,6 @@ public class BlogCategoryImpl implements BlogCtegoryService {
     public BlogCategoryResp saveCategory(BlogCategoryReq blogCategoryReq) {
         BlogCategoryResp blogCategoryResp = getCategoryByLabel(blogCategoryReq);
 
-        System.out.println(blogCategoryResp);
         if (blogCategoryResp.getId() != null) {
             return blogCategoryResp;
         }
@@ -52,5 +54,14 @@ public class BlogCategoryImpl implements BlogCtegoryService {
         BlogCategory blogCategory = blogCategoryRepository.save(blogCategoryReq.convertToBlogCategory());
         System.out.println(blogCategory);
         return BlogCategoryResp.build(blogCategory);
+    }
+
+    @Override
+    public List<BlogCategoryResp> getCategory() {
+       return jpaQueryFactory.selectFrom(Q_BLOG_CATEGORY)
+            .fetchAll()
+            .stream()
+            .map((Function<BlogCategory, BlogCategoryResp>) BlogCategoryResp::build)
+            .collect(Collectors.toList());
     }
 }

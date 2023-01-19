@@ -16,6 +16,7 @@ import io.minio.errors.InvalidResponseException;
 import io.minio.errors.ServerException;
 import io.minio.errors.XmlParserException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,5 +69,11 @@ public class BlogController {
     @PostMapping("/save-category")
     public JsonResp<BlogCategoryResp> saveCategory(@RequestBody BlogCategoryReq blogCategoryReq) {
         return JsonResp.success(blogCtegoryService.saveCategory(blogCategoryReq));
+    }
+
+
+    @GetMapping("/get-category")
+    public JsonResp<List<BlogCategoryResp>> getCategory() {
+        return JsonResp.success(blogCtegoryService.getCategory());
     }
 }

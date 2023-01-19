@@ -79,10 +79,6 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public void saveBlog(BlogReq blogReq) {
-        List<String> tags = blogReq.getTags();
-
-        tagsService.checkDuplicateTag(tags);
-
 
     }
 }
