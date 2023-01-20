@@ -91,7 +91,12 @@ public class BlogServiceImpl implements BlogService {
 
         List<Integer> tagIds = tagsService.saveTags(blogReq.getTags());
         tagsService.saveBatch(tagIds, blogId);
-        blogImageService.saveBatch(blogReq.getImages(), blogId);
+
+        List<Integer> images = blogReq.getImages();
+        if (Objects.isNull(images)) {
+            images = imgService.defaultImg();
+        }
+        blogImageService.saveBatch(images, blogId);
         return blogId;
     }
 }

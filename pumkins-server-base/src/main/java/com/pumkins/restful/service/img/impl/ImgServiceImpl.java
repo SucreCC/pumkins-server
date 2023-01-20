@@ -9,6 +9,13 @@ import com.pumkins.restful.service.img.ImgService;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 
 /**
@@ -42,5 +49,21 @@ public class ImgServiceImpl implements ImgService {
     public ImgResp save(ImgReq imgReq) {
         Img img = imgRepository.save(imgReq.convertToImg());
         return ImgResp.build(img);
+    }
+
+    @Override
+    public List<Integer> defaultImg() {
+        List<Img> imgList = jpaQueryFactory.selectFrom(Q_IMG)
+            .fetchAll()
+            .stream().collect(Collectors.toList());
+
+        ArrayList<Integer> integers = new ArrayList<>();
+        int i = new Random()
+            .nextInt(imgList.size() - 3);
+        imgList.subList(i, i + 3).forEach(img -> {
+            integers.add(img.getId());
+        });
+
+        return integers;
     }
 }
