@@ -2,8 +2,11 @@ package com.pumkins.restful.service.blog.impl;
 
 import com.pumkins.dto.request.BlogReq;
 import com.pumkins.dto.request.ImgReq;
+import com.pumkins.dto.resp.BlogResp;
 import com.pumkins.dto.resp.ImgResp;
 import com.pumkins.entity.Blog;
+import com.pumkins.entity.QBlog;
+import com.pumkins.entity.QBlogCategory;
 import com.pumkins.repository.BlogRepository;
 import com.pumkins.restful.service.blog.BlogService;
 import com.pumkins.restful.service.img.BlogImageService;
@@ -38,6 +41,8 @@ import java.util.Objects;
  */
 @Component
 public class BlogServiceImpl implements BlogService {
+
+    private final static QBlog Q_BLOG = QBlog.blog;
 
     @Autowired
     private ImgService imgService;
@@ -98,5 +103,17 @@ public class BlogServiceImpl implements BlogService {
         }
         blogImageService.saveBatch(images, blogId);
         return blogId;
+    }
+
+
+    @Override
+    public BlogResp getBlogById(Integer blogId) {
+        Blog blog = jpaQueryFactory.selectFrom(Q_BLOG)
+            .where(Q_BLOG.id.eq(blogId))
+            .fetchOne();
+
+        List<String> tags = tagsService.getTagByBlogId(blogId);
+        List<String> images = imgService.getImgByBlogId(blogId);
+        return BlogResp.build(blog, tags, images);
     }
 }

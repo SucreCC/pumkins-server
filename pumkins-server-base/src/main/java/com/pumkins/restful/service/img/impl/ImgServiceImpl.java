@@ -5,6 +5,7 @@ import com.pumkins.dto.resp.ImgResp;
 import com.pumkins.entity.Img;
 import com.pumkins.entity.QImg;
 import com.pumkins.repository.ImgRepository;
+import com.pumkins.restful.service.img.BlogImageService;
 import com.pumkins.restful.service.img.ImgService;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class ImgServiceImpl implements ImgService {
 
     @Autowired
     private ImgRepository imgRepository;
+
+    @Autowired
+    private BlogImageService blogImageService;
 
     @Override
     public ImgResp checkDuplicateImg(String md5, long size, String suffix) {
@@ -65,5 +69,16 @@ public class ImgServiceImpl implements ImgService {
         });
 
         return integers;
+    }
+
+    @Override
+    public List<String> getImgByBlogId(Integer id) {
+        List<Integer> imgByBlogId = blogImageService.getImgByBlogId(id);
+        return jpaQueryFactory.selectFrom(Q_IMG)
+            .where(Q_IMG.id.in(imgByBlogId))
+            .fetchAll()
+            .stream()
+            .map(Img::getImgName)
+            .collect(Collectors.toList());
     }
 }

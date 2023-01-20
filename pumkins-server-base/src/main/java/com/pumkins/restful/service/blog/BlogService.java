@@ -2,6 +2,7 @@ package com.pumkins.restful.service.blog;
 
 
 import com.pumkins.dto.request.BlogReq;
+import com.pumkins.dto.resp.BlogResp;
 import com.pumkins.dto.resp.ImgResp;
 import io.minio.errors.ErrorResponseException;
 import io.minio.errors.InsufficientDataException;
@@ -26,4 +27,6 @@ public interface BlogService {
     ImgResp uploadImg(MultipartFile file) throws IOException, ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException;
 
     Integer saveBlog(BlogReq blogReq);
+
+    BlogResp getBlogById(Integer blogId);
 }

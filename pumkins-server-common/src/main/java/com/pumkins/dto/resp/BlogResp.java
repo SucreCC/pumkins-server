@@ -1,7 +1,9 @@
 package com.pumkins.dto.resp;
 
+import com.pumkins.entity.Blog;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -32,4 +34,11 @@ public class BlogResp {
     private Integer numberOfComment;
     private Integer numberOfFavorite;
     private Boolean isDraft;
+
+    public static BlogResp build(Blog blog, List<String> tags, List<String> images) {
+        BlogResp blogResp = new BlogResp();
+        BeanUtils.copyProperties(blog, blogResp);
+        return blogResp.setTags(tags)
+            .setImages(images);
+    }
 }

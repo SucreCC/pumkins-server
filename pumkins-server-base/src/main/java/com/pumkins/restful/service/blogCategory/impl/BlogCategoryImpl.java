@@ -2,7 +2,9 @@ package com.pumkins.restful.service.blogCategory.impl;
 
 import com.pumkins.dto.request.BlogCategoryReq;
 import com.pumkins.dto.resp.BlogCategoryResp;
+import com.pumkins.dto.resp.BlogResp;
 import com.pumkins.entity.BlogCategory;
+import com.pumkins.entity.QBlog;
 import com.pumkins.entity.QBlogCategory;
 import com.pumkins.repository.BlogCategoryRepository;
 import com.pumkins.restful.service.blogCategory.BlogCtegoryService;

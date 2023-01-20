@@ -18,4 +18,6 @@ public interface ImgService {
     ImgResp save(ImgReq imgReq);
 
     List<Integer> defaultImg();
+
+    List<String> getImgByBlogId(Integer id);
 }

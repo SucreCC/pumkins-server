@@ -3,6 +3,7 @@ package com.pumkins.restful.controller.blog;
 import com.pumkins.dto.request.BlogCategoryReq;
 import com.pumkins.dto.request.BlogReq;
 import com.pumkins.dto.resp.BlogCategoryResp;
+import com.pumkins.dto.resp.BlogResp;
 import com.pumkins.dto.resp.ImgResp;
 import com.pumkins.dto.response.JsonResp;
 import com.pumkins.restful.service.blog.BlogService;
@@ -58,21 +59,24 @@ public class BlogController {
         return JsonResp.success(imgResp.getId());
     }
 
-
     @PostMapping("/save-tags")
     public JsonResp<List<Integer>> saveTags(@RequestBody List<String> tags) {
         return JsonResp.success(tagsService.saveTags(tags));
     }
-
 
     @PostMapping("/save-category")
     public JsonResp<BlogCategoryResp> saveCategory(@RequestBody BlogCategoryReq blogCategoryReq) {
         return JsonResp.success(blogCtegoryService.saveCategory(blogCategoryReq));
     }
 
-
     @GetMapping("/get-category")
     public JsonResp<List<BlogCategoryResp>> getCategory() {
         return JsonResp.success(blogCtegoryService.getCategory());
+    }
+
+    @GetMapping("/get-blog-by-id")
+    public JsonResp<BlogResp> getBlogById(@RequestParam() Integer blogId) {
+
+        return JsonResp.success(blogService.getBlogById(blogId));
     }
 }

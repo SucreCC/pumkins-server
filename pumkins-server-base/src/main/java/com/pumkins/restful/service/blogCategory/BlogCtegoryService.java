@@ -2,6 +2,7 @@ package com.pumkins.restful.service.blogCategory;
 
 import com.pumkins.dto.request.BlogCategoryReq;
 import com.pumkins.dto.resp.BlogCategoryResp;
+import com.pumkins.dto.resp.BlogResp;
 
 import java.util.List;
 

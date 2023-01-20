@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author: dengKai
@@ -46,5 +47,15 @@ public class BlogImgServiceImpl implements BlogImageService {
                 blogImagRepository.save(blogImg);
             }
         });
+    }
+
+    @Override
+    public List<Integer> getImgByBlogId(Integer blogId) {
+        return jpaQueryFactory.selectFrom(Q_BLOG_IMG)
+            .where(Q_BLOG_IMG.blogId.eq(blogId))
+            .fetchAll()
+            .stream()
+            .map(BlogImg::getImgId)
+            .collect(Collectors.toList());
     }
 }

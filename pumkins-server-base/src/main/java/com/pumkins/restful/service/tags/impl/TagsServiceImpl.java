@@ -5,6 +5,7 @@ import com.pumkins.entity.QTags;
 import com.pumkins.entity.Tags;
 import com.pumkins.repository.BlogTagsRepository;
 import com.pumkins.repository.TagsRepository;
+import com.pumkins.restful.service.tags.BlogTagService;
 import com.pumkins.restful.service.tags.TagsService;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author: dengKai
@@ -34,6 +36,8 @@ public class TagsServiceImpl implements TagsService {
     @Autowired
     private BlogTagsRepository blogTagsRepository;
 
+    @Autowired
+    private BlogTagService blogTagService;
 
     @Override
     public void checkDuplicateTag(List<String> tags) {
@@ -75,6 +79,17 @@ public class TagsServiceImpl implements TagsService {
                 .setUpdateDate(date);
             blogTagsRepository.save(blogTags);
         });
+    }
+
+    @Override
+    public List<String> getTagByBlogId(Integer blogId) {
+        List<Integer> tagByBlogId = blogTagService.getTagByBlogId(blogId);
+        return jpaQueryFactory.selectFrom(Q_TAGS)
+            .where(Q_TAGS.id.in(tagByBlogId))
+            .fetchAll()
+            .stream()
+            .map(Tags::getTagName)
+            .collect(Collectors.toList());
     }
 
 

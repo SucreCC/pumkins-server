@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface BlogImageService {
     void saveBatch(List<Integer> images, Integer blogId);
+
+    List<Integer> getImgByBlogId(Integer id);
 }
