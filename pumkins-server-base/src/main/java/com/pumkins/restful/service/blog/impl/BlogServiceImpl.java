@@ -11,7 +11,6 @@ import com.pumkins.restful.service.img.ImgService;
 import com.pumkins.restful.service.tags.TagsService;
 import com.pumkins.util.MinionUtils;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import io.minio.errors.ErrorResponseException;
 import io.minio.errors.InsufficientDataException;
 import io.minio.errors.InternalException;
@@ -83,7 +82,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void saveBlog(BlogReq blogReq) {
+    public Integer saveBlog(BlogReq blogReq) {
         Date date = new Date();
         blogReq.setCreateDate(date)
             .setUpdateDate(date);
@@ -93,5 +92,6 @@ public class BlogServiceImpl implements BlogService {
         List<Integer> tagIds = tagsService.saveTags(blogReq.getTags());
         tagsService.saveBatch(tagIds, blogId);
         blogImageService.saveBatch(blogReq.getImages(), blogId);
+        return blogId;
     }
 }

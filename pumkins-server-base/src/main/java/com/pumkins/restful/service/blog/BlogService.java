@@ -25,5 +25,5 @@ import java.security.NoSuchAlgorithmException;
 public interface BlogService {
     ImgResp uploadImg(MultipartFile file) throws IOException, ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException;
 
-    void saveBlog(BlogReq blogReq);
+    Integer saveBlog(BlogReq blogReq);
 }
