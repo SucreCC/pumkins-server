@@ -31,7 +31,7 @@ public class BlogTags {
     private Integer blogId;
 
     @Column(name = "tag_id", nullable = false)
-    private Integer imgId;
+    private Integer tagId;
 
     @Column(name = "create_date", nullable = false)
     private Date createDate;

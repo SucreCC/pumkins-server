@@ -3,6 +3,7 @@ package com.pumkins.dto.request;
 import com.pumkins.entity.Blog;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.beans.BeanUtils;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -24,11 +25,11 @@ public class BlogReq {
     private String title;
     private List<String> tags;
     private String markdown;
-    private String blogDescribe;
+    private String blogDescription;
     private String username;
-    private List<String> images;
+    private List<Integer> images;
     private Boolean isVisible;
-    private String categoryId;
+    private String category;
     private Boolean workOrLife;
     private Date createDate;
     private Date updateDate;
@@ -37,4 +38,10 @@ public class BlogReq {
     private Integer numberOfComment;
     private Integer numberOfFavorite;
     private Boolean isDraft;
+
+    public Blog convertToBlog() {
+        Blog blog = new Blog();
+        BeanUtils.copyProperties(this, blog);
+        return blog;
+    }
 }

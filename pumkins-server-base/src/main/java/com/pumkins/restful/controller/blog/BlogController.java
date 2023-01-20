@@ -48,9 +48,9 @@ public class BlogController {
     private BlogCtegoryService blogCtegoryService;
 
     @PostMapping("/save-blog")
-    public JsonResp<BlogReq> saveBlog(@RequestBody BlogReq blogReq) {
+    public JsonResp<String> saveBlog(@RequestBody BlogReq blogReq) {
         blogService.saveBlog(blogReq);
-        return JsonResp.success(blogReq);
+        return JsonResp.success("success");
     }
 
     @PostMapping("/blog-picture")

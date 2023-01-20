@@ -19,11 +19,11 @@ public class BlogResp {
     private String title;
     private List<String> tags;
     private String markdown;
-    private String blogDescribe;
+    private String blogDescription;
     private String username;
     private List<String> images;
     private Boolean isVisible;
-    private String categoryId;
+    private String category;
     private Boolean workOrLife;
     private Date createDate;
     private Date updateDate;

@@ -12,5 +12,7 @@ public interface TagsService {
     void checkDuplicateTag(List<String> tags);
 
     List<Integer> saveTags(List<String> tags);
+
+    void saveBatch(List<Integer> tags, Integer blogId);
 }
 

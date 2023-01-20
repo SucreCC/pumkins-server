@@ -1,7 +1,9 @@
 package com.pumkins.restful.service.tags.impl;
 
+import com.pumkins.entity.BlogTags;
 import com.pumkins.entity.QTags;
 import com.pumkins.entity.Tags;
+import com.pumkins.repository.BlogTagsRepository;
 import com.pumkins.repository.TagsRepository;
 import com.pumkins.restful.service.tags.TagsService;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -28,6 +30,9 @@ public class TagsServiceImpl implements TagsService {
 
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
+
+    @Autowired
+    private BlogTagsRepository blogTagsRepository;
 
 
     @Override
@@ -57,6 +62,19 @@ public class TagsServiceImpl implements TagsService {
         });
 
         return tagList;
+    }
+
+    @Override
+    public void saveBatch(List<Integer> tags, Integer blogId) {
+        Date date = new Date();
+        tags.forEach(tagId->{
+            BlogTags blogTags = new BlogTags()
+                .setBlogId(blogId)
+                .setTagId(tagId)
+                .setCreateDate(date)
+                .setUpdateDate(date);
+            blogTagsRepository.save(blogTags);
+        });
     }
 
 

@@ -30,26 +30,20 @@ public class Blog {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "tags", nullable = false)
-    private String tags;
-
     @Column(name = "markdown", nullable = false)
     private String markdown;
 
-    @Column(name = "blog_describe", nullable = false)
-    private String blogDescribe;
+    @Column(name = "blog_description")
+    private String blogDescription;
 
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "images", nullable = false)
-    private String images;
-
     @Column(name = "is_visible", nullable = false)
     private Boolean isVisible;
 
-    @Column(name = "category_id", nullable = false)
-    private String categoryId;
+    @Column(name = "category", nullable = false)
+    private String category;
 
     @Column(name = "work_or_life", nullable = false)
     private Boolean workOrLife;

@@ -10,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+
 /**
  * @author: dengKai
  * @date: 2023/01/14 22:14
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImgServiceImpl implements ImgService {
 
-    private final QImg qImg = QImg.img;
+    private final static QImg Q_IMG = QImg.img;
 
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
@@ -29,10 +30,10 @@ public class ImgServiceImpl implements ImgService {
 
     @Override
     public ImgResp checkDuplicateImg(String md5, long size, String suffix) {
-        Img img = jpaQueryFactory.selectFrom(qImg)
-            .where(qImg.md5.eq(md5))
-            .where(qImg.size.eq(size))
-            .where(qImg.suffix.eq(suffix))
+        Img img = jpaQueryFactory.selectFrom(Q_IMG)
+            .where(Q_IMG.md5.eq(md5))
+            .where(Q_IMG.size.eq(size))
+            .where(Q_IMG.suffix.eq(suffix))
             .fetchOne();
         return ImgResp.build(img);
     }
