@@ -6,7 +6,6 @@ import com.pumkins.dto.resp.BlogResp;
 import com.pumkins.dto.resp.ImgResp;
 import com.pumkins.entity.Blog;
 import com.pumkins.entity.QBlog;
-import com.pumkins.entity.QBlogCategory;
 import com.pumkins.repository.BlogRepository;
 import com.pumkins.restful.service.blog.BlogService;
 import com.pumkins.restful.service.img.BlogImageService;
@@ -23,6 +22,7 @@ import io.minio.errors.ServerException;
 import io.minio.errors.XmlParserException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,9 +30,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author: dengKai
@@ -115,5 +117,19 @@ public class BlogServiceImpl implements BlogService {
         List<String> tags = tagsService.getTagByBlogId(blogId);
         List<String> images = imgService.getImgByBlogId(blogId);
         return BlogResp.build(blog, tags, images);
+    }
+
+    @Override
+    public List<BlogResp> getArticleBlog() {
+        return jpaQueryFactory.selectFrom(Q_BLOG)
+            .fetchAll()
+            .orderBy(Q_BLOG.updateDate.desc())
+            .stream()
+            .limit(3)
+            .map(blog -> {
+                Integer blogId = blog.getId();
+                return BlogResp.build(blog, tagsService.getTagByBlogId(blogId), imgService.getImgByBlogId(blogId));
+            })
+            .collect(Collectors.toList());
     }
 }

@@ -75,5 +75,9 @@ public class MinionUtils {
             .build();
     }
 
+    public String buildImgUrl(String imgName) {
+        return this.host + IMG_BUCKET_NAME + "/" + imgName;
+    }
+
 
 }

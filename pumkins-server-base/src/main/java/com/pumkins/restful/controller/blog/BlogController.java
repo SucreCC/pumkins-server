@@ -76,7 +76,12 @@ public class BlogController {
 
     @GetMapping("/get-blog-by-id")
     public JsonResp<BlogResp> getBlogById(@RequestParam() Integer blogId) {
-
         return JsonResp.success(blogService.getBlogById(blogId));
+    }
+
+
+    @GetMapping("/article-blog")
+    public JsonResp<List<BlogResp>> getBlogById() {
+        return JsonResp.success(blogService.getArticleBlog());
     }
 }

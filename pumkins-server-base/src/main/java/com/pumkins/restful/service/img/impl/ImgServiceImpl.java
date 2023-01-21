@@ -7,6 +7,7 @@ import com.pumkins.entity.QImg;
 import com.pumkins.repository.ImgRepository;
 import com.pumkins.restful.service.img.BlogImageService;
 import com.pumkins.restful.service.img.ImgService;
+import com.pumkins.util.MinionUtils;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,6 +39,9 @@ public class ImgServiceImpl implements ImgService {
 
     @Autowired
     private BlogImageService blogImageService;
+
+    @Autowired
+    private MinionUtils minionUtils;
 
     @Override
     public ImgResp checkDuplicateImg(String md5, long size, String suffix) {
@@ -78,7 +82,7 @@ public class ImgServiceImpl implements ImgService {
             .where(Q_IMG.id.in(imgByBlogId))
             .fetchAll()
             .stream()
-            .map(Img::getImgName)
+            .map(img -> minionUtils.buildImgUrl(img.getImgName()))
             .collect(Collectors.toList());
     }
 }

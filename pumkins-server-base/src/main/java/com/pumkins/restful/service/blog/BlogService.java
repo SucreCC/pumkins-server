@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 /**
  * @author: dengKai
@@ -29,4 +30,6 @@ public interface BlogService {
     Integer saveBlog(BlogReq blogReq);
 
     BlogResp getBlogById(Integer blogId);
+
+    List<BlogResp> getArticleBlog();
 }

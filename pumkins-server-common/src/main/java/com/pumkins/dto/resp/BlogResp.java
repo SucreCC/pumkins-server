@@ -1,5 +1,6 @@
 package com.pumkins.dto.resp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pumkins.entity.Blog;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -27,7 +28,9 @@ public class BlogResp {
     private Boolean isVisible;
     private String category;
     private Boolean workOrLife;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createDate;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date updateDate;
     private Integer numberOfThumbUp;
     private Integer numberOfView;
