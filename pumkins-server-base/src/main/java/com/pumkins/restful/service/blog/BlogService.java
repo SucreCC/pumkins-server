@@ -29,6 +29,8 @@ public interface BlogService {
 
     Integer saveBlog(BlogReq blogReq);
 
+    Integer saveEditBlog(BlogReq blogReq);
+
     BlogResp getBlogById(Integer blogId);
 
     List<BlogResp> getArticleBlog();

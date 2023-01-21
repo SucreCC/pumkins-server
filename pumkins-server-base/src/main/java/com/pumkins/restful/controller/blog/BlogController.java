@@ -53,6 +53,11 @@ public class BlogController {
         return JsonResp.success(blogService.saveBlog(blogReq));
     }
 
+    @PostMapping("/save-edit-blog-blog")
+    public JsonResp<Integer> saveEditBlog(@RequestBody BlogReq blogReq) {
+        return JsonResp.success(blogService.saveEditBlog(blogReq));
+    }
+
     @PostMapping("/blog-picture")
     public JsonResp<Integer> uploadImages(@RequestParam("file") MultipartFile file) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException, InvalidBucketNameException {
         ImgResp imgResp = blogService.uploadImg(file);

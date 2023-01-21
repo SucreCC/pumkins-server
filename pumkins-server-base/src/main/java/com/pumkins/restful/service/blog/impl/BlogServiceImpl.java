@@ -107,6 +107,23 @@ public class BlogServiceImpl implements BlogService {
         return blogId;
     }
 
+    @Override
+    public Integer saveEditBlog(BlogReq blogReq) {
+        Date date = new Date();
+        blogReq.setCreateDate(date)
+            .setUpdateDate(date);
+        Blog blog = blogRepository.save(blogReq.convertToBlog());
+        Integer blogId = blog.getId();
+
+        List<Integer> tagIds = tagsService.saveTags(blogReq.getTags());
+        tagsService.saveBatch(tagIds, blogId);
+
+        List<Integer> images = blogReq.getImages();
+        if (Objects.nonNull(images)) {
+            blogImageService.saveEditBlogImages(images, blogId);
+        }
+        return blogId;
+    }
 
     @Override
     public BlogResp getBlogById(Integer blogId) {

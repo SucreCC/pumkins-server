@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -37,7 +38,6 @@ public class BlogImgServiceImpl implements BlogImageService {
                 .where(Q_BLOG_IMG.imgId.eq(imgId))
                 .fetchOne();
 
-            System.out.println(blogImgFromDB);
             if (blogImgFromDB == null) {
                 BlogImg blogImg = new BlogImg()
                     .setImgId(imgId)
@@ -57,5 +57,15 @@ public class BlogImgServiceImpl implements BlogImageService {
             .stream()
             .map(BlogImg::getImgId)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveEditBlogImages(List<Integer> images, Integer blogId) {
+        Integer id = Objects.requireNonNull(jpaQueryFactory.selectFrom(Q_BLOG_IMG)
+                .where(Q_BLOG_IMG.blogId.eq(blogId))
+                .fetchOne())
+            .getId();
+        blogImagRepository.deleteById(id);
+        saveBatch(images, blogId);
     }
 }

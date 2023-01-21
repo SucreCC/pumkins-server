@@ -12,4 +12,6 @@ public interface BlogImageService {
     void saveBatch(List<Integer> images, Integer blogId);
 
     List<Integer> getImgByBlogId(Integer id);
+
+    void saveEditBlogImages(List<Integer> images, Integer blogId);
 }
