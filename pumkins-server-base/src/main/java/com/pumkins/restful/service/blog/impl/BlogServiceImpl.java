@@ -46,6 +46,8 @@ public class BlogServiceImpl implements BlogService {
 
     private final static QBlog Q_BLOG = QBlog.blog;
 
+    private final static Integer ARTICLE_BLOG_LIMIT_NUMBER = 3;
+
     @Autowired
     private ImgService imgService;
 
@@ -109,9 +111,6 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Integer saveEditBlog(BlogReq blogReq) {
-        Date date = new Date();
-        blogReq.setCreateDate(date)
-            .setUpdateDate(date);
         Blog blog = blogRepository.save(blogReq.convertToBlog());
         Integer blogId = blog.getId();
 
@@ -142,7 +141,7 @@ public class BlogServiceImpl implements BlogService {
             .fetchAll()
             .orderBy(Q_BLOG.updateDate.desc())
             .stream()
-            .limit(3)
+            .limit(ARTICLE_BLOG_LIMIT_NUMBER)
             .map(blog -> {
                 Integer blogId = blog.getId();
                 return BlogResp.build(blog, tagsService.getTagByBlogId(blogId), imgService.getImgByBlogId(blogId));

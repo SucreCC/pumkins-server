@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 public class BlogImgServiceImpl implements BlogImageService {
     private final static QBlogImg Q_BLOG_IMG = QBlogImg.blogImg;
 
+    private final static Integer First_IMG = 1;
+
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
 
@@ -62,9 +64,12 @@ public class BlogImgServiceImpl implements BlogImageService {
     @Override
     public void saveEditBlogImages(List<Integer> images, Integer blogId) {
         Integer id = Objects.requireNonNull(jpaQueryFactory.selectFrom(Q_BLOG_IMG)
-                .where(Q_BLOG_IMG.blogId.eq(blogId))
-                .fetchOne())
-            .getId();
+            .where(Q_BLOG_IMG.blogId.eq(blogId))
+            .fetchAll()
+            .stream()
+            .collect(Collectors.toList())
+            .get(First_IMG)
+            .getId());
         blogImagRepository.deleteById(id);
         saveBatch(images, blogId);
     }

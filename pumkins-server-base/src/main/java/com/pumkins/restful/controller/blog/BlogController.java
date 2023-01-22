@@ -53,7 +53,7 @@ public class BlogController {
         return JsonResp.success(blogService.saveBlog(blogReq));
     }
 
-    @PostMapping("/save-edit-blog-blog")
+    @PostMapping("/save-edit-blog")
     public JsonResp<Integer> saveEditBlog(@RequestBody BlogReq blogReq) {
         return JsonResp.success(blogService.saveEditBlog(blogReq));
     }
