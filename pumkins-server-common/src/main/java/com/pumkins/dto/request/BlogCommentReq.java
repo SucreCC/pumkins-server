@@ -1,8 +1,11 @@
 package com.pumkins.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.pumkins.entity.BlogComment;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.beans.BeanUtils;
+
 import java.util.Date;
 
 /**
@@ -16,10 +19,15 @@ public class BlogCommentReq {
     private Integer id;
     private Integer blogId;
     private Integer parentId;
-    private Integer childrenId;
-    private Integer blogComment;
+    private String commentContent;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createDate;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date updateDate;
+
+    public BlogComment build(){
+        BlogComment blogComment = new BlogComment();
+        BeanUtils.copyProperties(this,blogComment);
+        return blogComment;
+    }
 }

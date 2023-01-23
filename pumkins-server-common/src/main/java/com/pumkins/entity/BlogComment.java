@@ -33,11 +33,8 @@ public class BlogComment {
     @Column(name = "parent_id", nullable = false)
     private Integer parentId;
 
-    @Column(name = "children_id", nullable = false)
-    private Integer childrenId;
-
-    @Column(name = "blog_comment", nullable = false)
-    private Integer blogComment;
+    @Column(name = "comment_content", nullable = false)
+    private String commentContent;
 
     @Column(name = "create_date", nullable = false)
     private Date createDate;

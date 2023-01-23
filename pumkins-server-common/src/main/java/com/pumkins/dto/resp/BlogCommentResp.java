@@ -17,8 +17,7 @@ public class BlogCommentResp {
     private Integer id;
     private Integer blogId;
     private Integer parentId;
-    private Integer childrenId;
-    private Integer blogComment;
+    private String commentContent;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createDate;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
