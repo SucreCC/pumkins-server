@@ -54,7 +54,6 @@ public class BlogCategoryImpl implements BlogCtegoryService {
         blogCategoryReq.setCreateDate(date)
             .setUpdateDate(date);
         BlogCategory blogCategory = blogCategoryRepository.save(blogCategoryReq.convertToBlogCategory());
-        System.out.println(blogCategory);
         return BlogCategoryResp.build(blogCategory);
     }
 

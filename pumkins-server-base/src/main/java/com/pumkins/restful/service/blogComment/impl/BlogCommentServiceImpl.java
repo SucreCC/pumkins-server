@@ -44,6 +44,21 @@ public class BlogCommentServiceImpl implements BlogCommentService {
             .fetchAll()
             .stream()
             .collect(Collectors.toList());
+
+        getSubComment(blogCommentZeroList,blogId);
         return null;
+    }
+
+    private void getSubComment(List<BlogComment> blogCommentZeroList,Integer blogId) {
+        Integer id = blogCommentZeroList.get(1).getId();
+
+        List<BlogComment> collect = jpaQueryFactory.selectFrom(Q_BLOG_COMMENT)
+            .where(Q_BLOG_COMMENT.blogId.eq(blogId))
+            .where(Q_BLOG_COMMENT.parentId.eq(id))
+            .fetchAll()
+            .where()
+            .stream()
+            .collect(Collectors.toList());
+
     }
 }

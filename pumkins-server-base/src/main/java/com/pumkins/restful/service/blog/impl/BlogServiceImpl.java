@@ -1,5 +1,6 @@
 package com.pumkins.restful.service.blog.impl;
 
+import com.pumkins.dto.request.BlogCategoryReq;
 import com.pumkins.dto.request.BlogReq;
 import com.pumkins.dto.request.ImgReq;
 import com.pumkins.dto.resp.BlogResp;
@@ -8,6 +9,7 @@ import com.pumkins.entity.Blog;
 import com.pumkins.entity.QBlog;
 import com.pumkins.repository.BlogRepository;
 import com.pumkins.restful.service.blog.BlogService;
+import com.pumkins.restful.service.blogCategory.BlogCtegoryService;
 import com.pumkins.restful.service.img.BlogImageService;
 import com.pumkins.restful.service.img.ImgService;
 import com.pumkins.restful.service.tags.TagsService;
@@ -66,6 +68,9 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     private TagsService tagsService;
 
+    @Autowired
+    private BlogCtegoryService blogCtegoryService;
+
     @Override
     public ImgResp uploadImg(MultipartFile file) throws IOException, ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         String md5 = DigestUtils.md5Hex(file.getInputStream());
@@ -98,6 +103,8 @@ public class BlogServiceImpl implements BlogService {
         Blog blog = blogRepository.save(blogReq.convertToBlog());
         Integer blogId = blog.getId();
 
+        saveBlogCategory(blogReq);
+
         List<Integer> tagIds = tagsService.saveTags(blogReq.getTags());
         tagsService.saveBatch(tagIds, blogId);
 
@@ -109,10 +116,19 @@ public class BlogServiceImpl implements BlogService {
         return blogId;
     }
 
+    private void saveBlogCategory(BlogReq blogReq) {
+        BlogCategoryReq blogCategoryReq = new BlogCategoryReq()
+            .setLabel(blogReq.getCategory())
+            .setValue(blogReq.getCategoryValue());
+        blogCtegoryService.saveCategory(blogCategoryReq);
+    }
+
     @Override
     public Integer saveEditBlog(BlogReq blogReq) {
         Blog blog = blogRepository.save(blogReq.convertToBlog());
         Integer blogId = blog.getId();
+
+        saveBlogCategory(blogReq);
 
         List<Integer> tagIds = tagsService.saveTags(blogReq.getTags());
         tagsService.saveBatch(tagIds, blogId);

@@ -31,6 +31,7 @@ public class BlogReq {
     private List<Integer> images;
     private Boolean isVisible;
     private String category;
+    private Integer categoryValue;
     private Boolean workOrLife;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createDate;
