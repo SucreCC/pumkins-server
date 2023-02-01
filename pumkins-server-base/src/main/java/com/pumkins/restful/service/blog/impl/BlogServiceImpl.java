@@ -50,6 +50,8 @@ public class BlogServiceImpl implements BlogService {
 
     private final static Integer ARTICLE_BLOG_LIMIT_NUMBER = 3;
 
+    private final static Boolean IS_VISIBLE = true;
+
     @Autowired
     private ImgService imgService;
 
@@ -155,6 +157,7 @@ public class BlogServiceImpl implements BlogService {
     public List<BlogResp> getArticleBlog() {
         return jpaQueryFactory.selectFrom(Q_BLOG)
             .fetchAll()
+            .where(Q_BLOG.isVisible.eq(IS_VISIBLE))
             .orderBy(Q_BLOG.updateDate.desc())
             .stream()
             .limit(ARTICLE_BLOG_LIMIT_NUMBER)
