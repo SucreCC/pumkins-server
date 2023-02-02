@@ -52,6 +52,8 @@ public class BlogServiceImpl implements BlogService {
 
     private final static Boolean IS_VISIBLE = true;
 
+    private final static Boolean Not_Draft = false;
+
     @Autowired
     private ImgService imgService;
 
@@ -156,9 +158,10 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<BlogResp> getArticleBlog() {
         return jpaQueryFactory.selectFrom(Q_BLOG)
-            .fetchAll()
             .where(Q_BLOG.isVisible.eq(IS_VISIBLE))
+            .where(Q_BLOG.isDraft.eq(Not_Draft))
             .orderBy(Q_BLOG.updateDate.desc())
+            .fetchAll()
             .stream()
             .limit(ARTICLE_BLOG_LIMIT_NUMBER)
             .map(blog -> {

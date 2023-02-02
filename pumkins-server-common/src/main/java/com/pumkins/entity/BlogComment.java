@@ -36,6 +36,15 @@ public class BlogComment {
     @Column(name = "comment_content", nullable = false)
     private String commentContent;
 
+    @Column(name = "user_name", nullable = false)
+    private String username;
+
+    @Column(name = "icon", nullable = false)
+    private String icon;
+
+    @Column(name = "number_of_thumb_up", nullable = false)
+    private Integer numberOfThumbUp;
+
     @Column(name = "create_date", nullable = false)
     private Date createDate;
 

@@ -15,4 +15,6 @@ public interface BlogCommentService {
     void save(BlogCommentReq blogCommentReq);
 
     List<BlogCommentResp> getBlogCommentByBlogId(Integer blogId);
+
+    void deleteBlogCommentByBlogId(Integer id);
 }

@@ -38,27 +38,35 @@ public class BlogCommentServiceImpl implements BlogCommentService {
 
     @Override
     public List<BlogCommentResp> getBlogCommentByBlogId(Integer blogId) {
-        List<BlogComment> blogCommentZeroList = jpaQueryFactory.selectFrom(Q_BLOG_COMMENT)
+        List<BlogCommentResp> blogCommentRespList = jpaQueryFactory.selectFrom(Q_BLOG_COMMENT)
             .where(Q_BLOG_COMMENT.blogId.eq(blogId))
             .where(Q_BLOG_COMMENT.parentId.eq(BLOG_ID_ZERO))
+            .orderBy(Q_BLOG_COMMENT.createDate.desc())
             .fetchAll()
             .stream()
+            .map(BlogCommentResp::build)
             .collect(Collectors.toList());
-
-        getSubComment(blogCommentZeroList,blogId);
-        return null;
+        return getSubComment(blogCommentRespList, blogId);
     }
 
-    private void getSubComment(List<BlogComment> blogCommentZeroList,Integer blogId) {
-        Integer id = blogCommentZeroList.get(1).getId();
+    @Override
+    public void deleteBlogCommentByBlogId(Integer id) {
+        blogCommentRepository.deleteById(id);
+    }
 
-        List<BlogComment> collect = jpaQueryFactory.selectFrom(Q_BLOG_COMMENT)
-            .where(Q_BLOG_COMMENT.blogId.eq(blogId))
-            .where(Q_BLOG_COMMENT.parentId.eq(id))
-            .fetchAll()
-            .where()
-            .stream()
-            .collect(Collectors.toList());
+    private List<BlogCommentResp> getSubComment(List<BlogCommentResp> blogCommentRespList, Integer blogId) {
 
+        blogCommentRespList.stream().map(blogCommentResp -> {
+            List<BlogCommentResp> subCommentList = jpaQueryFactory.selectFrom(Q_BLOG_COMMENT)
+                .where(Q_BLOG_COMMENT.parentId.eq(blogCommentResp.getId()))
+                .orderBy(Q_BLOG_COMMENT.createDate.desc())
+                .fetchAll()
+                .stream()
+                .map(BlogCommentResp::build)
+                .collect(Collectors.toList());
+            blogCommentResp.setSubComment(subCommentList);
+            return blogCommentResp;
+        });
+        return blogCommentRespList;
     }
 }

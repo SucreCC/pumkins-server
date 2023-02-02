@@ -20,6 +20,9 @@ public class BlogCommentReq {
     private Integer blogId;
     private Integer parentId;
     private String commentContent;
+    private String username;
+    private String icon;
+    private Integer numberOfThumbUp;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createDate;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")

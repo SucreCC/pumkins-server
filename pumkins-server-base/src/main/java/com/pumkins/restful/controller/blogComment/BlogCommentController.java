@@ -30,13 +30,20 @@ public class BlogCommentController {
     private BlogCommentService blogCommentService;
 
     @PostMapping("/save-blog-comment")
-    public JsonResp<BlogCommentResp> login(@RequestBody BlogCommentReq blogCommentReq) {
+    public JsonResp<BlogCommentResp> saveBlogComment(@RequestBody BlogCommentReq blogCommentReq) {
         blogCommentService.save(blogCommentReq);
         return JsonResp.success(null);
     }
 
     @GetMapping("/get-blog-comment")
-    public JsonResp<List<BlogCommentResp>> getBlogById(@RequestParam() Integer blogId) {
+    public JsonResp<List<BlogCommentResp>> getBlogCommentById(@RequestParam() Integer blogId) {
         return JsonResp.success(blogCommentService.getBlogCommentByBlogId(blogId));
+    }
+
+
+    @GetMapping("/delete-blog-comment")
+    public JsonResp<String> deleteBlogCommentById(@RequestParam() Integer id) {
+        blogCommentService.deleteBlogCommentByBlogId(id);
+        return JsonResp.success();
     }
 }
