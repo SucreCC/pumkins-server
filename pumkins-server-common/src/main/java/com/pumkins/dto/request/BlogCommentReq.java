@@ -23,14 +23,15 @@ public class BlogCommentReq {
     private String username;
     private String icon;
     private Integer numberOfThumbUp;
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date createDate;
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date updateDate;
 
     public BlogComment build(){
         BlogComment blogComment = new BlogComment();
         BeanUtils.copyProperties(this,blogComment);
+        Date date = new Date();
+        blogComment.setCreateDate(date);
+        blogComment.setUpdateDate(date);
         return blogComment;
     }
 }

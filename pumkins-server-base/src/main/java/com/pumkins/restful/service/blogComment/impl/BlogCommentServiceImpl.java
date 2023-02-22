@@ -41,7 +41,7 @@ public class BlogCommentServiceImpl implements BlogCommentService {
         List<BlogCommentResp> blogCommentRespList = jpaQueryFactory.selectFrom(Q_BLOG_COMMENT)
             .where(Q_BLOG_COMMENT.blogId.eq(blogId))
             .where(Q_BLOG_COMMENT.parentId.eq(BLOG_ID_ZERO))
-            .orderBy(Q_BLOG_COMMENT.createDate.desc())
+            .orderBy(Q_BLOG_COMMENT.createDate.desc(),Q_BLOG_COMMENT.numberOfThumbUp.desc())
             .fetchAll()
             .stream()
             .map(BlogCommentResp::build)
@@ -56,16 +56,16 @@ public class BlogCommentServiceImpl implements BlogCommentService {
 
     private List<BlogCommentResp> getSubComment(List<BlogCommentResp> blogCommentRespList, Integer blogId) {
 
-        blogCommentRespList.stream().map(blogCommentResp -> {
+        blogCommentRespList.forEach(blogCommentResp -> {
             List<BlogCommentResp> subCommentList = jpaQueryFactory.selectFrom(Q_BLOG_COMMENT)
                 .where(Q_BLOG_COMMENT.parentId.eq(blogCommentResp.getId()))
-                .orderBy(Q_BLOG_COMMENT.createDate.desc())
+                .where(Q_BLOG_COMMENT.blogId.eq(blogId))
+                .orderBy(Q_BLOG_COMMENT.createDate.asc())
                 .fetchAll()
                 .stream()
                 .map(BlogCommentResp::build)
                 .collect(Collectors.toList());
             blogCommentResp.setSubComment(subCommentList);
-            return blogCommentResp;
         });
         return blogCommentRespList;
     }
