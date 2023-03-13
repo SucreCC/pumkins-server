@@ -170,4 +170,17 @@ public class BlogServiceImpl implements BlogService {
             })
             .collect(Collectors.toList());
     }
+
+    @Override
+    public void blogView(Integer id) {
+        Blog blog = jpaQueryFactory.selectFrom(Q_BLOG)
+            .where(Q_BLOG.id.eq(id))
+            .fetchOne();
+
+        if(Objects.isNull(blog.getNumberOfView())) {
+            blog.setNumberOfView(0);
+        }
+        blog.setNumberOfView(blog.getNumberOfView() + 1);
+        blogRepository.save(blog);
+    }
 }

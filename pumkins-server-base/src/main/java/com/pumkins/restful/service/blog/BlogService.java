@@ -34,4 +34,6 @@ public interface BlogService {
     BlogResp getBlogById(Integer blogId);
 
     List<BlogResp> getArticleBlog();
+
+    void blogView(Integer id);
 }

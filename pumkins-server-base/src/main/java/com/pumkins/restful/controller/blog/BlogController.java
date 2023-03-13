@@ -89,4 +89,11 @@ public class BlogController {
     public JsonResp<List<BlogResp>> getBlogById() {
         return JsonResp.success(blogService.getArticleBlog());
     }
+
+
+    @GetMapping("/blog-view")
+    public JsonResp<String> blogView(@RequestParam() Integer id) {
+        blogService.blogView(id);
+        return JsonResp.success("success");
+    }
 }
