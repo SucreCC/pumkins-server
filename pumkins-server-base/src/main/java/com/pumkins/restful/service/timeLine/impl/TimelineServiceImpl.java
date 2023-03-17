@@ -1,9 +1,12 @@
 package com.pumkins.restful.service.timeLine.impl;
 
-import com.pumkins.dto.request.BlogLinkReq;
 import com.pumkins.dto.request.TimeNodeReq;
 import com.pumkins.dto.resp.BlogTimelineResp;
+import com.pumkins.dto.resp.TimeNodeResp;
 import com.pumkins.entity.QBlog;
+import com.pumkins.entity.QTimeNode;
+import com.pumkins.entity.QTimeNodeLinkBlog;
+import com.pumkins.entity.QTimeNodeTags;
 import com.pumkins.entity.TimeNode;
 import com.pumkins.entity.TimeNodeLinkBlog;
 import com.pumkins.entity.TimeNodeTags;
@@ -24,8 +27,21 @@ import java.util.stream.Collectors;
  */
 @Component
 public class TimelineServiceImpl implements TimelineService {
+
+    @Autowired
+    private final static Integer SELECT_LIMIT = 10;
+
     @Autowired
     private final static QBlog Q_BLOG = QBlog.blog;
+
+    @Autowired
+    private final static QTimeNodeTags Q_TIME_NODE_TAGS = QTimeNodeTags.timeNodeTags;
+
+    @Autowired
+    private final static QTimeNodeLinkBlog Q_TIME_NODE_LINK_BLOG = QTimeNodeLinkBlog.timeNodeLinkBlog;
+
+    @Autowired
+    private final static QTimeNode Q_TIME_NODE = QTimeNode.timeNode;
 
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
@@ -58,6 +74,32 @@ public class TimelineServiceImpl implements TimelineService {
         timeNodeReq.setId(timeNode.getId());
         saveLinkBlogs(timeNodeReq);
         saveTimeNodeTags(timeNodeReq);
+    }
+
+    @Override
+    public List<TimeNodeResp> getBlogTimeNodes() {
+        return jpaQueryFactory.selectFrom(Q_TIME_NODE)
+            .orderBy(Q_TIME_NODE.createDate.desc())
+            .fetchAll()
+            .limit(SELECT_LIMIT)
+            .stream()
+            .map(timeNode -> {
+                List<String> timeNodeTags = jpaQueryFactory.selectFrom(Q_TIME_NODE_TAGS)
+                    .where(Q_TIME_NODE_TAGS.timeNodeId.eq(timeNode.getId()))
+                    .fetchAll()
+                    .stream()
+                    .map(TimeNodeTags::getTagName)
+                    .collect(Collectors.toList());
+
+                List<TimeNodeLinkBlog> timeNodeLinkBlogs = jpaQueryFactory.selectFrom(Q_TIME_NODE_LINK_BLOG)
+                    .where(Q_TIME_NODE_LINK_BLOG.timeNodeId.eq(timeNode.getId()))
+                    .fetchAll()
+                    .stream()
+                    .collect(Collectors.toList());
+                return TimeNodeResp.build(timeNode,timeNodeTags,timeNodeLinkBlogs);
+
+            })
+            .collect(Collectors.toList());
     }
 
     private void saveLinkBlogs(TimeNodeReq timeNodeReq) {

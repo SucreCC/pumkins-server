@@ -113,7 +113,7 @@ public class BlogServiceImpl implements BlogService {
         tagsService.saveBatch(tagIds, blogId);
 
         List<Integer> images = blogReq.getImages();
-        if (Objects.isNull(images)) {
+        if (images.size() == 0) {
             images = imgService.defaultImg();
         }
         blogImageService.saveBatch(images, blogId);
@@ -177,7 +177,7 @@ public class BlogServiceImpl implements BlogService {
             .where(Q_BLOG.id.eq(id))
             .fetchOne();
 
-        if(Objects.isNull(blog.getNumberOfView())) {
+        if (Objects.isNull(blog.getNumberOfView())) {
             blog.setNumberOfView(0);
         }
         blog.setNumberOfView(blog.getNumberOfView() + 1);

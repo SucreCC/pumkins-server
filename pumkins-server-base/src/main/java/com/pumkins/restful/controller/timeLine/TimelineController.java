@@ -4,6 +4,7 @@ import com.pumkins.dto.request.TimeNodeReq;
 import com.pumkins.dto.resp.BlogCommentResp;
 import com.pumkins.dto.resp.BlogResp;
 import com.pumkins.dto.resp.BlogTimelineResp;
+import com.pumkins.dto.resp.TimeNodeResp;
 import com.pumkins.dto.response.JsonResp;
 import com.pumkins.restful.service.timeLine.TimelineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,11 @@ public class TimelineController {
     public JsonResp<String> saveTimeNode(@RequestBody TimeNodeReq timeNodeReq) {
         timelineService.saveTimeNode(timeNodeReq);
         return JsonResp.success();
+    }
+
+
+    @GetMapping("/get-time-node")
+    public JsonResp<List<TimeNodeResp>> getTimeNodes() {
+        return JsonResp.success(timelineService.getBlogTimeNodes());
     }
 }
