@@ -1,5 +1,7 @@
 package com.pumkins.restful.service.user.impl;
 
+import com.pumkins.dto.enus.RoleType;
+import com.pumkins.dto.resp.TimeLineUserResp;
 import com.pumkins.dto.resp.UserResp;
 import com.pumkins.entity.QUser;
 import com.pumkins.entity.User;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author: dengKai
@@ -53,5 +56,25 @@ public class UserServiceImpl implements UserService {
             .where(qUser.username.eq(username))
             .build()
             .fetchOne();
+    }
+
+    @Override
+    public List<TimeLineUserResp> getTimeLineUserList() {
+        return JPAQueryWrapper.create(jpaQueryFactory.selectFrom(qUser))
+            .where(qUser.role.eq(RoleType.HOST.getName()))
+            .build()
+            .fetchAll()
+            .stream()
+            .map(TimeLineUserResp::ConvertToUserResp)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public TimeLineUserResp getTimeLineUserById(Integer userId) {
+        User user = JPAQueryWrapper.create(jpaQueryFactory.selectFrom(qUser))
+            .where(qUser.id.eq(userId))
+            .build()
+            .fetchOne();
+        return TimeLineUserResp.ConvertToUserResp(user);
     }
 }

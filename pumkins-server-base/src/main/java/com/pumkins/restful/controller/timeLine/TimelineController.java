@@ -4,6 +4,7 @@ import com.pumkins.dto.request.TimeNodeReq;
 import com.pumkins.dto.resp.BlogCommentResp;
 import com.pumkins.dto.resp.BlogResp;
 import com.pumkins.dto.resp.BlogTimelineResp;
+import com.pumkins.dto.resp.TimeLineUserResp;
 import com.pumkins.dto.resp.TimeNodeResp;
 import com.pumkins.dto.response.JsonResp;
 import com.pumkins.restful.service.timeLine.TimelineService;
@@ -40,9 +41,13 @@ public class TimelineController {
         return JsonResp.success();
     }
 
-
     @GetMapping("/get-time-node")
     public JsonResp<List<TimeNodeResp>> getTimeNodes() {
         return JsonResp.success(timelineService.getBlogTimeNodes());
+    }
+
+    @GetMapping("/get-user-list")
+    public JsonResp<List<TimeLineUserResp>> getTimeLineUserList() {
+        return JsonResp.success(timelineService.getTimeLineUserList());
     }
 }

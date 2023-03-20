@@ -28,7 +28,6 @@ public class TimeNodeReq {
     private Double longitude;
     private List<BlogLinkReq> linkBlog;
     private List<String> tags;
-    private String username;
     private Integer userId;
 
     public TimeNode convertToTimeNode(){

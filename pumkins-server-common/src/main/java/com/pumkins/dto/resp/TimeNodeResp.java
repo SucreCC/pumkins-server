@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pumkins.dto.request.BlogLinkReq;
 import com.pumkins.entity.TimeNode;
 import com.pumkins.entity.TimeNodeLinkBlog;
-import com.pumkins.entity.TimeNodeTags;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.beans.BeanUtils;
@@ -34,9 +33,10 @@ public class TimeNodeResp {
     private String username;
     private Integer userId;
 
-    public static TimeNodeResp build(TimeNode timeNode, List<String> timeNodeTags, List<TimeNodeLinkBlog> timeNodeLinkBlogs) {
+    public static TimeNodeResp build(TimeNode timeNode, List<String> timeNodeTags, List<TimeNodeLinkBlog> timeNodeLinkBlogs, TimeLineUserResp timeLineUserResp) {
         TimeNodeResp timeNodeResp = new TimeNodeResp();
         BeanUtils.copyProperties(timeNode, timeNodeResp);
+        timeNodeResp.setUsername(timeLineUserResp.getUsername());
         return timeNodeResp.setLinkBlog(timeNodeLinkBlogs).setTags(timeNodeTags);
     }
 }

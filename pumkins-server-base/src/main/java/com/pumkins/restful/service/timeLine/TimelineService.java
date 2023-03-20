@@ -2,6 +2,7 @@ package com.pumkins.restful.service.timeLine;
 
 import com.pumkins.dto.request.TimeNodeReq;
 import com.pumkins.dto.resp.BlogTimelineResp;
+import com.pumkins.dto.resp.TimeLineUserResp;
 import com.pumkins.dto.resp.TimeNodeResp;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface TimelineService {
     void saveTimeNode(TimeNodeReq timeNodeReq);
 
     List<TimeNodeResp> getBlogTimeNodes();
+
+    List<TimeLineUserResp> getTimeLineUserList();
 }

@@ -13,7 +13,6 @@ create table pumkins_time_node
     time_description   varchar(255) not null comment 'time node description',
     latitude           double       not null comment 'latitude',
     longitude          double       not null comment 'longitude',
-    username           varchar(255) not null comment 'username',
     user_id            int          not null comment 'user id'
 ) comment 'pumkins_time_node table' charset = utf8mb4;
 

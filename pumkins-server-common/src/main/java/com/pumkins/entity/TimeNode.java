@@ -45,9 +45,6 @@ public class TimeNode {
     @Column(name = "longitude", nullable = false)
     private Double longitude;
 
-    @Column(name = "username", nullable = false)
-    private String username;
-
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 }

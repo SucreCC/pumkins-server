@@ -2,6 +2,7 @@ package com.pumkins.restful.service.timeLine.impl;
 
 import com.pumkins.dto.request.TimeNodeReq;
 import com.pumkins.dto.resp.BlogTimelineResp;
+import com.pumkins.dto.resp.TimeLineUserResp;
 import com.pumkins.dto.resp.TimeNodeResp;
 import com.pumkins.entity.QBlog;
 import com.pumkins.entity.QTimeNode;
@@ -14,10 +15,15 @@ import com.pumkins.repository.TimeNodeLinkBlogRepository;
 import com.pumkins.repository.TimeNodeRepository;
 import com.pumkins.repository.TimeNodeTagsRepository;
 import com.pumkins.restful.service.timeLine.TimelineService;
+import com.pumkins.restful.service.user.UserService;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -55,6 +61,9 @@ public class TimelineServiceImpl implements TimelineService {
     @Autowired
     private TimeNodeTagsRepository timeNodeTagsRepository;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public List<BlogTimelineResp> getBlogTimeList() {
         return jpaQueryFactory.selectFrom(Q_BLOG)
@@ -67,13 +76,15 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public void saveTimeNode(TimeNodeReq timeNodeReq) {
-        System.out.println(timeNodeReq);
-        System.out.println(timeNodeReq.convertToTimeNode());
-
         TimeNode timeNode = timeNodeRepository.save(timeNodeReq.convertToTimeNode());
         timeNodeReq.setId(timeNode.getId());
-        saveLinkBlogs(timeNodeReq);
-        saveTimeNodeTags(timeNodeReq);
+        if(!CollectionUtils.isEmpty(timeNodeReq.getLinkBlog())){
+            saveLinkBlogs(timeNodeReq);
+        }
+
+        if(!CollectionUtils.isEmpty(timeNodeReq.getTags())){
+            saveTimeNodeTags(timeNodeReq);
+        }
     }
 
     @Override
@@ -96,10 +107,16 @@ public class TimelineServiceImpl implements TimelineService {
                     .fetchAll()
                     .stream()
                     .collect(Collectors.toList());
-                return TimeNodeResp.build(timeNode,timeNodeTags,timeNodeLinkBlogs);
+                TimeLineUserResp timeLineUserResp = userService.getTimeLineUserById(timeNode.getUserId());
+                return TimeNodeResp.build(timeNode,timeNodeTags,timeNodeLinkBlogs,timeLineUserResp);
 
             })
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TimeLineUserResp> getTimeLineUserList() {
+        return userService.getTimeLineUserList();
     }
 
     private void saveLinkBlogs(TimeNodeReq timeNodeReq) {
