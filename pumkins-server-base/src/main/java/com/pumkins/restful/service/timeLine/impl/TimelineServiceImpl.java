@@ -1,5 +1,6 @@
 package com.pumkins.restful.service.timeLine.impl;
 
+import com.pumkins.dto.request.TimeLineSearchReq;
 import com.pumkins.dto.request.TimeNodeReq;
 import com.pumkins.dto.resp.BlogTimelineResp;
 import com.pumkins.dto.resp.TimeLineUserResp;
@@ -11,12 +12,14 @@ import com.pumkins.entity.QTimeNodeTags;
 import com.pumkins.entity.TimeNode;
 import com.pumkins.entity.TimeNodeLinkBlog;
 import com.pumkins.entity.TimeNodeTags;
+import com.pumkins.querydsl.JPAQueryWrapper;
 import com.pumkins.repository.TimeNodeLinkBlogRepository;
 import com.pumkins.repository.TimeNodeRepository;
 import com.pumkins.repository.TimeNodeTagsRepository;
 import com.pumkins.restful.service.timeLine.TimelineService;
 import com.pumkins.restful.service.user.UserService;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -78,11 +81,11 @@ public class TimelineServiceImpl implements TimelineService {
     public void saveTimeNode(TimeNodeReq timeNodeReq) {
         TimeNode timeNode = timeNodeRepository.save(timeNodeReq.convertToTimeNode());
         timeNodeReq.setId(timeNode.getId());
-        if(!CollectionUtils.isEmpty(timeNodeReq.getLinkBlog())){
+        if (!CollectionUtils.isEmpty(timeNodeReq.getLinkBlog())) {
             saveLinkBlogs(timeNodeReq);
         }
 
-        if(!CollectionUtils.isEmpty(timeNodeReq.getTags())){
+        if (!CollectionUtils.isEmpty(timeNodeReq.getTags())) {
             saveTimeNodeTags(timeNodeReq);
         }
     }
@@ -108,7 +111,7 @@ public class TimelineServiceImpl implements TimelineService {
                     .stream()
                     .collect(Collectors.toList());
                 TimeLineUserResp timeLineUserResp = userService.getTimeLineUserById(timeNode.getUserId());
-                return TimeNodeResp.build(timeNode,timeNodeTags,timeNodeLinkBlogs,timeLineUserResp);
+                return TimeNodeResp.build(timeNode, timeNodeTags, timeNodeLinkBlogs, timeLineUserResp);
 
             })
             .collect(Collectors.toList());
@@ -117,6 +120,47 @@ public class TimelineServiceImpl implements TimelineService {
     @Override
     public List<TimeLineUserResp> getTimeLineUserList() {
         return userService.getTimeLineUserList();
+    }
+
+    @Override
+    public List<String> getTagList() {
+        return jpaQueryFactory.selectFrom(Q_TIME_NODE_TAGS)
+            .orderBy(Q_TIME_NODE_TAGS.createDate.desc())
+            .stream()
+            .distinct()
+            .map(TimeNodeTags::getTagName)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TimeNodeResp> searchNodeList(TimeLineSearchReq timeLineSearchReq) {
+        return JPAQueryWrapper.create(jpaQueryFactory.selectFrom(Q_TIME_NODE))
+            .where(Objects.nonNull(timeLineSearchReq.getUserId()), () -> Q_TIME_NODE.userId.eq(timeLineSearchReq.getUserId()))
+            .where(Objects.nonNull(timeLineSearchReq.getStartDate()), () -> Q_TIME_NODE.createDate.goe(timeLineSearchReq.getStartDate()))
+            .where(Objects.nonNull(timeLineSearchReq.getEndDate()), () -> Q_TIME_NODE.createDate.loe(timeLineSearchReq.getEndDate()))
+            .leftJoin(Q_TIME_NODE_TAGS)
+            .on(Q_TIME_NODE_TAGS.timeNodeId.eq(Q_TIME_NODE.id))
+            .where(!CollectionUtils.isEmpty(timeLineSearchReq.getTags()), () -> Q_TIME_NODE_TAGS.tagName.in(timeLineSearchReq.getTags()))
+            .orderBy(Q_TIME_NODE.createDate.desc())
+            .build()
+            .fetchAll()
+            .stream()
+            .map(timeNode -> {
+                List<TimeNodeLinkBlog> timeNodeLinkBlogList = jpaQueryFactory.selectFrom(Q_TIME_NODE_LINK_BLOG)
+                    .where(Q_TIME_NODE_LINK_BLOG.timeNodeId.eq(timeNode.getId()))
+                    .fetchAll()
+                    .stream()
+                    .collect(Collectors.toList());
+
+                List<String> timeNodeTags = jpaQueryFactory.selectFrom(Q_TIME_NODE_TAGS)
+                    .fetchAll()
+                    .stream()
+                    .map(TimeNodeTags::getTagName)
+                    .collect(Collectors.toList());
+                TimeLineUserResp timeLineUserResp = userService.getTimeLineUserById(timeNode.getUserId());
+                return TimeNodeResp.build(timeNode, timeNodeTags, timeNodeLinkBlogList, timeLineUserResp);
+            })
+            .collect(Collectors.toList());
     }
 
     private void saveLinkBlogs(TimeNodeReq timeNodeReq) {

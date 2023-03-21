@@ -1,5 +1,6 @@
 package com.pumkins.restful.service.timeLine;
 
+import com.pumkins.dto.request.TimeLineSearchReq;
 import com.pumkins.dto.request.TimeNodeReq;
 import com.pumkins.dto.resp.BlogTimelineResp;
 import com.pumkins.dto.resp.TimeLineUserResp;
@@ -21,4 +22,8 @@ public interface TimelineService {
     List<TimeNodeResp> getBlogTimeNodes();
 
     List<TimeLineUserResp> getTimeLineUserList();
+
+    List<String> getTagList();
+
+    List<TimeNodeResp> searchNodeList(TimeLineSearchReq timeLineSearchReq);
 }

@@ -1,5 +1,6 @@
 package com.pumkins.restful.controller.timeLine;
 
+import com.pumkins.dto.request.TimeLineSearchReq;
 import com.pumkins.dto.request.TimeNodeReq;
 import com.pumkins.dto.resp.BlogCommentResp;
 import com.pumkins.dto.resp.BlogResp;
@@ -49,5 +50,15 @@ public class TimelineController {
     @GetMapping("/get-user-list")
     public JsonResp<List<TimeLineUserResp>> getTimeLineUserList() {
         return JsonResp.success(timelineService.getTimeLineUserList());
+    }
+
+    @GetMapping("/get-tag-list")
+    public JsonResp<List<String>> getTagList() {
+        return JsonResp.success(timelineService.getTagList());
+    }
+
+    @PostMapping("/search-node-list")
+    public JsonResp<List<TimeNodeResp>> searchNodeList(@RequestBody TimeLineSearchReq timeLineSearchReq) {
+        return JsonResp.success(timelineService.searchNodeList(timeLineSearchReq));
     }
 }
