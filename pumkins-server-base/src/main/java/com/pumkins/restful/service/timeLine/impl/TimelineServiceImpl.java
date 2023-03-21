@@ -141,6 +141,7 @@ public class TimelineServiceImpl implements TimelineService {
             .leftJoin(Q_TIME_NODE_TAGS)
             .on(Q_TIME_NODE_TAGS.timeNodeId.eq(Q_TIME_NODE.id))
             .where(!CollectionUtils.isEmpty(timeLineSearchReq.getTags()), () -> Q_TIME_NODE_TAGS.tagName.in(timeLineSearchReq.getTags()))
+            .distinct()
             .orderBy(Q_TIME_NODE.createDate.desc())
             .build()
             .fetchAll()
