@@ -16,5 +16,7 @@ public interface TagsService {
     void saveBatch(List<Integer> tags, Integer blogId);
 
     List<String> getTagByBlogId(Integer blogId);
+
+    List<String> getBlogTags();
 }
 

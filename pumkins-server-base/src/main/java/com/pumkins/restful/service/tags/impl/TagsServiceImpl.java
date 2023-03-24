@@ -52,7 +52,7 @@ public class TagsServiceImpl implements TagsService {
 
         tags.forEach(tag -> {
             Tags tagByTagName = getTagByTagName(tag);
-            if (Objects.nonNull(tagByTagName)){
+            if (Objects.nonNull(tagByTagName)) {
                 tagList.add(tagByTagName.getId());
                 return;
             }
@@ -71,7 +71,7 @@ public class TagsServiceImpl implements TagsService {
     @Override
     public void saveBatch(List<Integer> tags, Integer blogId) {
         Date date = new Date();
-        tags.forEach(tagId->{
+        tags.forEach(tagId -> {
             BlogTags blogTags = new BlogTags()
                 .setBlogId(blogId)
                 .setTagId(tagId)
@@ -86,6 +86,16 @@ public class TagsServiceImpl implements TagsService {
         List<Integer> tagByBlogId = blogTagService.getTagByBlogId(blogId);
         return jpaQueryFactory.selectFrom(Q_TAGS)
             .where(Q_TAGS.id.in(tagByBlogId))
+            .fetchAll()
+            .stream()
+            .map(Tags::getTagName)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getBlogTags() {
+        return jpaQueryFactory.selectFrom(Q_TAGS)
+            .distinct()
             .fetchAll()
             .stream()
             .map(Tags::getTagName)
