@@ -27,6 +27,9 @@ public class Tags {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "blog_id", nullable = false)
+    private Integer blogId;
+
     @Column(name = "tag_name", nullable = false)
     private String tagName;
 

@@ -10,7 +10,7 @@ create table pumkins_blog
     title              varchar(255) not null comment '博客标题',
     markdown           longtext     not null comment '博客内容',
     blog_description   varchar(255) default null comment '博客描述',
-    username           varchar(255) not null comment '博客作者名',
+    user_id            int    not null comment '博客作者的id',
     is_visible         int(1) not null comment '是否对其他人可见',
     category           varchar(50)  default null comment '所属栏目id',
     is_draft           int(1) not null comment '是否为草稿',

@@ -45,11 +45,10 @@ public class TagsServiceImpl implements TagsService {
     }
 
     @Override
-    public List<Integer> saveTags(List<String> tags) {
+    public List<Integer> saveTags(List<String> tags, Integer blogId) {
 
         ArrayList<Integer> tagList = new ArrayList<>();
         Date date = new Date();
-
         tags.forEach(tag -> {
             Tags tagByTagName = getTagByTagName(tag);
             if (Objects.nonNull(tagByTagName)) {
@@ -60,7 +59,8 @@ public class TagsServiceImpl implements TagsService {
             Tags newTag = new Tags()
                 .setCreateDate(date)
                 .setUpdateDate(date)
-                .setTagName(tag);
+                .setTagName(tag)
+                .setBlogId(blogId);
             Tags save = tagsRepository.save(newTag);
             tagList.add(save.getId());
         });

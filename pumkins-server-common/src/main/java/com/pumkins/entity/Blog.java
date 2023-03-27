@@ -36,8 +36,8 @@ public class Blog {
     @Column(name = "blog_description")
     private String blogDescription;
 
-    @Column(name = "username", nullable = false)
-    private String username;
+    @Column(name = "user_id", nullable = false)
+    private Integer userId;
 
     @Column(name = "is_visible", nullable = false)
     private Boolean isVisible;

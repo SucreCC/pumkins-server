@@ -11,7 +11,7 @@ import java.util.List;
 public interface TagsService {
     void checkDuplicateTag(List<String> tags);
 
-    List<Integer> saveTags(List<String> tags);
+    List<Integer> saveTags(List<String> tags, Integer blogId);
 
     void saveBatch(List<Integer> tags, Integer blogId);
 

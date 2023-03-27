@@ -7,6 +7,8 @@ import com.pumkins.dto.resp.BlogResp;
 import com.pumkins.dto.resp.ImgResp;
 import com.pumkins.entity.Blog;
 import com.pumkins.entity.QBlog;
+import com.pumkins.entity.QUser;
+import com.pumkins.entity.User;
 import com.pumkins.repository.BlogRepository;
 import com.pumkins.restful.service.blog.BlogService;
 import com.pumkins.restful.service.blogCategory.BlogCtegoryService;
@@ -24,11 +26,11 @@ import io.minio.errors.ServerException;
 import io.minio.errors.XmlParserException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -46,6 +48,8 @@ import java.util.stream.Collectors;
 public class BlogServiceImpl implements BlogService {
 
     private final static QBlog Q_BLOG = QBlog.blog;
+
+    private final static QUser Q_USER = QUser.user;
 
     private final static Integer ARTICLE_BLOG_LIMIT_NUMBER = 3;
 
@@ -86,7 +90,6 @@ public class BlogServiceImpl implements BlogService {
         }
 
         String newImgName = minionUtils.upload(file);
-
         ImgReq imgReq = new ImgReq()
             .setMd5(md5)
             .setSize(size)
@@ -94,11 +97,11 @@ public class BlogServiceImpl implements BlogService {
             .setImgName(newImgName)
             .setCreateDate(new Date())
             .setUpdateDate(new Date());
-
         return imgService.save(imgReq);
     }
 
     @Override
+    @Transactional
     public Integer saveBlog(BlogReq blogReq) {
         Date date = new Date();
         blogReq.setCreateDate(date)
@@ -108,7 +111,7 @@ public class BlogServiceImpl implements BlogService {
 
         saveBlogCategory(blogReq);
 
-        List<Integer> tagIds = tagsService.saveTags(blogReq.getTags());
+        List<Integer> tagIds = tagsService.saveTags(blogReq.getTags(),blogId);
         tagsService.saveBatch(tagIds, blogId);
 
         List<Integer> images = blogReq.getImages();
@@ -127,13 +130,14 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    @Transactional
     public Integer saveEditBlog(BlogReq blogReq) {
         Blog blog = blogRepository.save(blogReq.convertToBlog());
         Integer blogId = blog.getId();
 
         saveBlogCategory(blogReq);
 
-        List<Integer> tagIds = tagsService.saveTags(blogReq.getTags());
+        List<Integer> tagIds = tagsService.saveTags(blogReq.getTags(), blogId);
         tagsService.saveBatch(tagIds, blogId);
 
         List<Integer> images = blogReq.getImages();
@@ -151,11 +155,13 @@ public class BlogServiceImpl implements BlogService {
 
         List<String> tags = tagsService.getTagByBlogId(blogId);
         List<String> images = imgService.getImgByBlogId(blogId);
-        return BlogResp.build(blog, tags, images);
+        User user = getUserByUserId(blog.getUserId());
+        return BlogResp.build(blog, tags, images, user);
     }
 
     @Override
     public List<BlogResp> getArticleBlog() {
+
         return jpaQueryFactory.selectFrom(Q_BLOG)
             .where(Q_BLOG.isVisible.eq(IS_VISIBLE))
             .where(Q_BLOG.isDraft.eq(Not_Draft))
@@ -164,8 +170,9 @@ public class BlogServiceImpl implements BlogService {
             .stream()
             .limit(ARTICLE_BLOG_LIMIT_NUMBER)
             .map(blog -> {
+                User user = getUserByUserId(blog.getUserId());
                 Integer blogId = blog.getId();
-                return BlogResp.build(blog, tagsService.getTagByBlogId(blogId), imgService.getImgByBlogId(blogId));
+                return BlogResp.build(blog, tagsService.getTagByBlogId(blogId), imgService.getImgByBlogId(blogId), user);
             })
             .collect(Collectors.toList());
     }
@@ -181,5 +188,11 @@ public class BlogServiceImpl implements BlogService {
         }
         blog.setNumberOfView(blog.getNumberOfView() + 1);
         blogRepository.save(blog);
+    }
+
+    private User getUserByUserId(Integer userId) {
+        return jpaQueryFactory.selectFrom(Q_USER)
+            .where(Q_USER.id.eq(userId))
+            .fetchOne();
     }
 }

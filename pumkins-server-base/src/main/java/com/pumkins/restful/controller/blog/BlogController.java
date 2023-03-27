@@ -65,8 +65,8 @@ public class BlogController {
     }
 
     @PostMapping("/save-tags")
-    public JsonResp<List<Integer>> saveTags(@RequestBody List<String> tags) {
-        return JsonResp.success(tagsService.saveTags(tags));
+    public JsonResp<List<Integer>> saveTags(@RequestBody List<String> tags,Integer blogId) {
+        return JsonResp.success(tagsService.saveTags(tags, blogId));
     }
 
     @PostMapping("/save-category")

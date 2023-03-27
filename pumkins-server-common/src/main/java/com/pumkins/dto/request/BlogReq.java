@@ -27,7 +27,7 @@ public class BlogReq {
     private List<String> tags;
     private String markdown;
     private String blogDescription;
-    private String username;
+    private Integer userId;
     private List<Integer> images;
     private Boolean isVisible;
     private String category;

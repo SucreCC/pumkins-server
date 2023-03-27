@@ -2,6 +2,7 @@ package com.pumkins.dto.resp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pumkins.entity.Blog;
+import com.pumkins.entity.User;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.beans.BeanUtils;
@@ -23,6 +24,7 @@ public class BlogResp {
     private List<String> tags;
     private String markdown;
     private String blogDescription;
+    private Integer userId;
     private String username;
     private List<String> images;
     private Boolean isVisible;
@@ -37,11 +39,14 @@ public class BlogResp {
     private Integer numberOfComment;
     private Integer numberOfFavorite;
     private Boolean isDraft;
+    private Integer totalBlogs;
 
-    public static BlogResp build(Blog blog, List<String> tags, List<String> images) {
+    public static BlogResp build(Blog blog, List<String> tags, List<String> images, User user) {
         BlogResp blogResp = new BlogResp();
         BeanUtils.copyProperties(blog, blogResp);
         return blogResp.setTags(tags)
-            .setImages(images);
+            .setImages(images)
+            .setUsername(user.getUsername())
+            .setUserId(user.getId());
     }
 }
