@@ -64,6 +64,11 @@ public class BlogController {
         return JsonResp.success(imgResp.getId());
     }
 
+    @PostMapping("/save-markdown-images")
+    public JsonResp<String> uploadMarkdownImages(@RequestParam("file") MultipartFile file) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException, InvalidBucketNameException {
+        return JsonResp.success(blogService.saveMarkdownImages(file));
+    }
+
     @PostMapping("/save-tags")
     public JsonResp<List<Integer>> saveTags(@RequestBody List<String> tags,Integer blogId) {
         return JsonResp.success(tagsService.saveTags(tags, blogId));

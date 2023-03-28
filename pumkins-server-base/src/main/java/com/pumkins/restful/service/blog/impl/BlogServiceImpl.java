@@ -190,6 +190,11 @@ public class BlogServiceImpl implements BlogService {
         blogRepository.save(blog);
     }
 
+    @Override
+    public String saveMarkdownImages(MultipartFile file) throws ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        return minionUtils.uploadMarkDownImg(file);
+    }
+
     private User getUserByUserId(Integer userId) {
         return jpaQueryFactory.selectFrom(Q_USER)
             .where(Q_USER.id.eq(userId))

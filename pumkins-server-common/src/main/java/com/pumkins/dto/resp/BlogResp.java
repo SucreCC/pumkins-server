@@ -49,4 +49,14 @@ public class BlogResp {
             .setUsername(user.getUsername())
             .setUserId(user.getId());
     }
+
+    public static BlogResp build(Blog blog, List<String> tags, List<String> images, User user,Integer totalBlogs) {
+        BlogResp blogResp = new BlogResp();
+        BeanUtils.copyProperties(blog, blogResp);
+        return blogResp.setTags(tags)
+            .setImages(images)
+            .setUsername(user.getUsername())
+            .setUserId(user.getId())
+            .setTotalBlogs(totalBlogs);
+    }
 }

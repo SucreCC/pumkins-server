@@ -65,7 +65,7 @@ public class RecentBlogServiceImpl implements RecentBlogService {
     @Override
     public List<BlogResp> getRecentBlogList(BlogSearchReq blogSearchReq) {
 
-        return  JPAQueryWrapper.create(jpaQueryFactory.selectFrom(Q_BLOG))
+        return JPAQueryWrapper.create(jpaQueryFactory.selectFrom(Q_BLOG))
             .where(Q_BLOG.isDraft.eq(Not_Draft))
             .where(Q_BLOG.isVisible.eq(IS_VISIBLE))
             .where(Objects.nonNull(blogSearchReq.getStartDate()), () -> Q_BLOG.createDate.goe(blogSearchReq.getStartDate()))
@@ -84,9 +84,14 @@ public class RecentBlogServiceImpl implements RecentBlogService {
             .skip(blogSearchReq.getSkipBlogs())
             .limit(blogSearchReq.getPageLimit())
             .map(blog -> {
+                Integer totalBlog = jpaQueryFactory.selectFrom(Q_BLOG)
+                    .fetchAll()
+                    .stream()
+                    .collect(Collectors.toList())
+                    .size();
                 User user = getUserByUserId(blog.getUserId());
                 Integer blogId = blog.getId();
-                return BlogResp.build(blog, tagsService.getTagByBlogId(blogId), imgService.getImgByBlogId(blogId), user);
+                return BlogResp.build(blog, tagsService.getTagByBlogId(blogId), imgService.getImgByBlogId(blogId), user, totalBlog);
             })
             .collect(Collectors.toList());
     }

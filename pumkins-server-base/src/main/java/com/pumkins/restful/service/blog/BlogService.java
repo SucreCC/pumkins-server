@@ -36,4 +36,6 @@ public interface BlogService {
     List<BlogResp> getArticleBlog();
 
     void blogView(Integer id);
+
+    String saveMarkdownImages(MultipartFile file) throws ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException;
 }

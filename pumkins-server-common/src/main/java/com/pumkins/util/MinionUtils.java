@@ -33,6 +33,8 @@ public class MinionUtils {
 
     private final static String IMG_BUCKET_NAME = "images";
 
+    private final static String MARKDOWN_IMG_BUCKET_NAME = "markdown";
+
     @Value("${minio.host}")
     private String host;
 
@@ -68,6 +70,20 @@ public class MinionUtils {
         return newImgName;
     }
 
+    public String uploadMarkDownImg(MultipartFile file) throws IOException, ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        String filename = file.getOriginalFilename();
+        MinioClient minioClient = buildMinioClient();
+        PutObjectArgs bucket = PutObjectArgs.builder()
+            .contentType(file.getContentType())
+            .stream(file.getInputStream(), file.getSize(), 0)
+            .bucket(MARKDOWN_IMG_BUCKET_NAME)
+            .object(filename)
+            .build();
+        minioClient.putObject(bucket);
+        return buildMarkdownImgUrl(filename);
+
+    }
+
     private MinioClient buildMinioClient() {
         return MinioClient.builder().endpoint(this.host)
 //            .credentials(username, password)
@@ -77,6 +93,10 @@ public class MinionUtils {
 
     public String buildImgUrl(String imgName) {
         return this.host + IMG_BUCKET_NAME + "/" + imgName;
+    }
+
+    public String buildMarkdownImgUrl(String imgName) {
+        return this.host + MARKDOWN_IMG_BUCKET_NAME + "/" + imgName;
     }
 
 
