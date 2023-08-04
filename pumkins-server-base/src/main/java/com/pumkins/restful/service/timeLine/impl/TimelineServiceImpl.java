@@ -96,6 +96,7 @@ public class TimelineServiceImpl implements TimelineService {
             .orderBy(Q_TIME_NODE.createDate.desc())
             .fetchAll()
             .limit(SELECT_LIMIT)
+            .orderBy(Q_TIME_NODE.id.desc())
             .stream()
             .map(timeNode -> {
                 List<String> timeNodeTags = jpaQueryFactory.selectFrom(Q_TIME_NODE_TAGS)
