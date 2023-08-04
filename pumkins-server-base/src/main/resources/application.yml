@@ -11,11 +11,11 @@ spring:
     name: baseServiceDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:mysql://159.138.149.31 :3306/pumkins_base?useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true&sessionVariables=FOREIGN_KEY_CHECKS=0&useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
+    url: jdbc:mysql://62.72.18.20 :3306/pumkins_base?useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true&sessionVariables=FOREIGN_KEY_CHECKS=0&useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
 #    url: jdbc:log4jdbc:mysql://159:138:149:31:3306/pumkins_base?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
 
     username: root
-    password: 123456
+    password: root
     hikari:
       maximum-pool-size: 100
       minimum-idle: 8
