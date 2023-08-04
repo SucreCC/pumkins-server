@@ -36,6 +36,7 @@ create table pumkins_tags
 (
     id          int PRIMARY key auto_increment,
     tag_name    VARCHAR (255)  not null comment 'tag name',
+    blog_id     int          not null comment 'blog id',
     create_date datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP (0) COMMENT 'create date',
     update_date datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP (0) COMMENT 'update date'
 ) comment 'tags table' charset = utf8mb4;

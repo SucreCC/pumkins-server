@@ -6,7 +6,7 @@ spring:
     name: pumkins-server-base
 
 
-
+# service mysqld start
   datasource:
     name: baseServiceDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -49,13 +49,13 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
-
+# nohup /home/minio/minio server --address :9001 --console-address :9002 /home/minio/data >/home/minio/minio.log 2>&1 &
 minio:
-  host: http://159.138.149.31:9800/
-  accessKey: fXGgJIUIKfJXY9lz
-  secretKey: bA0YmxraQNbtKNwJKUfVh25qCQBFgYnw
-  username: admin
-  password: admin123456
+  host: http://62.72.18.20:9001/
+  accessKey: OlGKjXpZRy5HjfITqV2e
+  secretKey: zKdDzR1DEMqSlje4gQ8YDR5qX3Rep30koFbDnRf2
+  username: minio
+  password: minio199511
 
 
 
