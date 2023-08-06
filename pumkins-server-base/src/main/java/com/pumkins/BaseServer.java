@@ -2,10 +2,10 @@ package com.pumkins;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author: dengKai
@@ -15,6 +15,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication(exclude = {MultipartAutoConfiguration.class})
 @EnableDiscoveryClient
 @EnableFeignClients
+@EnableScheduling
 public class BaseServer {
     public static void main(String[] args) {
         SpringApplication.run(BaseServer.class);

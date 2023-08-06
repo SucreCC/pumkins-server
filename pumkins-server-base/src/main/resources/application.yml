@@ -6,13 +6,13 @@ spring:
     name: pumkins-server-base
 
 
-# service mysqld start
+  # service mysqld start
   datasource:
     name: baseServiceDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    #    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     url: jdbc:mysql://62.72.18.20 :3306/pumkins_base?useSSL=false&serverTimezone=GMT%2B8&autoReconnect=true&sessionVariables=FOREIGN_KEY_CHECKS=0&useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
-#    url: jdbc:log4jdbc:mysql://159:138:149:31:3306/pumkins_base?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+    #    url: jdbc:log4jdbc:mysql://159:138:149:31:3306/pumkins_base?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
 
     username: root
     password: root
@@ -56,6 +56,9 @@ minio:
   secretKey: zKdDzR1DEMqSlje4gQ8YDR5qX3Rep30koFbDnRf2
   username: minio
   password: minio199511
+
+newsApi:
+  apiKey: 840378fad1ef48aaa6faba6daee85305
 
 
 
