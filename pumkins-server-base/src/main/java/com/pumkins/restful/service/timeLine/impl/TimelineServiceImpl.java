@@ -93,10 +93,10 @@ public class TimelineServiceImpl implements TimelineService {
     @Override
     public List<TimeNodeResp> getBlogTimeNodes() {
         return jpaQueryFactory.selectFrom(Q_TIME_NODE)
-            .orderBy(Q_TIME_NODE.createDate.desc())
             .fetchAll()
             .limit(SELECT_LIMIT)
-            .orderBy(Q_TIME_NODE.id.desc())
+//            .orderBy(Q_TIME_NODE.id.desc(), Q_TIME_NODE.createDate.desc())
+            .orderBy(Q_TIME_NODE.createDate.desc(),Q_TIME_NODE.id.desc())
             .stream()
             .map(timeNode -> {
                 List<String> timeNodeTags = jpaQueryFactory.selectFrom(Q_TIME_NODE_TAGS)
