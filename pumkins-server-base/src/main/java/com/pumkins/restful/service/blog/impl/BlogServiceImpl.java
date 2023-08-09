@@ -4,6 +4,7 @@ import com.pumkins.dto.request.BlogCategoryReq;
 import com.pumkins.dto.request.BlogReq;
 import com.pumkins.dto.request.ImgReq;
 import com.pumkins.dto.resp.BlogResp;
+import com.pumkins.dto.resp.FeaturedArticleResp;
 import com.pumkins.dto.resp.ImgResp;
 import com.pumkins.entity.Blog;
 import com.pumkins.entity.QBlog;
@@ -56,6 +57,8 @@ public class BlogServiceImpl implements BlogService {
     private final static Boolean IS_VISIBLE = true;
 
     private final static Boolean Not_Draft = false;
+
+    private final static Integer FEATURED_ARTICLE_LIMIT_NUMBER = 6;
 
     @Autowired
     private ImgService imgService;
@@ -111,7 +114,7 @@ public class BlogServiceImpl implements BlogService {
 
         saveBlogCategory(blogReq);
 
-        List<Integer> tagIds = tagsService.saveTags(blogReq.getTags(),blogId);
+        List<Integer> tagIds = tagsService.saveTags(blogReq.getTags(), blogId);
         tagsService.saveBatch(tagIds, blogId);
 
         List<Integer> images = blogReq.getImages();
@@ -193,6 +196,23 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public String saveMarkdownImages(MultipartFile file) throws ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         return minionUtils.uploadMarkDownImg(file);
+    }
+
+    @Override
+    public List<FeaturedArticleResp> getFeaturedArticle(Boolean workOrLife) {
+
+        return jpaQueryFactory.selectFrom(Q_BLOG)
+            .where(Q_BLOG.isVisible.eq(IS_VISIBLE))
+            .where(Q_BLOG.isDraft.eq(Not_Draft))
+            .where(Q_BLOG.workOrLife.eq(workOrLife))
+            .orderBy(Q_BLOG.createDate.desc(), Q_BLOG.numberOfView.desc())
+            .fetchAll()
+            .limit(FEATURED_ARTICLE_LIMIT_NUMBER)
+            .stream()
+            .map(blog -> {
+                return FeaturedArticleResp.buildFeaturedArticle(blog, imgService.getImgByBlogId(blog.getId()));
+            })
+            .collect(Collectors.toList());
     }
 
     private User getUserByUserId(Integer userId) {

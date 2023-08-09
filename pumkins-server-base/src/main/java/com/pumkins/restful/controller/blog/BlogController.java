@@ -4,6 +4,7 @@ import com.pumkins.dto.request.BlogCategoryReq;
 import com.pumkins.dto.request.BlogReq;
 import com.pumkins.dto.resp.BlogCategoryResp;
 import com.pumkins.dto.resp.BlogResp;
+import com.pumkins.dto.resp.FeaturedArticleResp;
 import com.pumkins.dto.resp.ImgResp;
 import com.pumkins.dto.response.JsonResp;
 import com.pumkins.restful.service.blog.BlogService;
@@ -101,4 +102,10 @@ public class BlogController {
         blogService.blogView(id);
         return JsonResp.success("success");
     }
+
+    @GetMapping("/featured-article")
+    public JsonResp<List<FeaturedArticleResp>> getFeaturedArticle(@RequestParam() Boolean workOrLife) {
+        return JsonResp.success(blogService.getFeaturedArticle(workOrLife));
+    }
+
 }

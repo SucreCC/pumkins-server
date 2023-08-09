@@ -3,6 +3,7 @@ package com.pumkins.restful.service.blog;
 
 import com.pumkins.dto.request.BlogReq;
 import com.pumkins.dto.resp.BlogResp;
+import com.pumkins.dto.resp.FeaturedArticleResp;
 import com.pumkins.dto.resp.ImgResp;
 import io.minio.errors.ErrorResponseException;
 import io.minio.errors.InsufficientDataException;
@@ -38,4 +39,6 @@ public interface BlogService {
     void blogView(Integer id);
 
     String saveMarkdownImages(MultipartFile file) throws ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException;
+
+    List<FeaturedArticleResp> getFeaturedArticle(Boolean workOrLife);
 }
