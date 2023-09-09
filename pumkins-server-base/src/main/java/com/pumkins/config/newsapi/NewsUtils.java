@@ -1,12 +1,11 @@
 package com.pumkins.config.newsapi;
 
+import com.pumkins.config.newsapi.callback.ArticlesResponseCallback;
+import com.pumkins.config.newsapi.dto.Article;
+import com.pumkins.config.newsapi.dto.request.EverythingRequest;
+import com.pumkins.config.newsapi.dto.request.TopHeadlinesRequest;
+import com.pumkins.config.newsapi.dto.response.ArticleResponse;
 import com.pumkins.entity.News;
-import com.pumkins.newsapi.NewsApiClient;
-import com.pumkins.newsapi.callback.ArticlesResponseCallback;
-import com.pumkins.newsapi.dto.Article;
-import com.pumkins.newsapi.dto.request.EverythingRequest;
-import com.pumkins.newsapi.dto.request.TopHeadlinesRequest;
-import com.pumkins.newsapi.dto.response.ArticleResponse;
 import com.pumkins.restful.service.news.NewsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
