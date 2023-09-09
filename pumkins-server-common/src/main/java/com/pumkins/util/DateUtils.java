@@ -39,10 +39,10 @@ public class DateUtils {
             day = day + month + " month ";
         }
 
-        if (date1 > 0){
+        if (date1 > 0) {
             day = day + date1 + " days ago";
         }
 
-            return day;
+        return day == "" ? "Today" : day;
     }
 }

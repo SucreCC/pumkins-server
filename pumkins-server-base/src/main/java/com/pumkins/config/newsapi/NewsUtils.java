@@ -1,6 +1,5 @@
 package com.pumkins.config.newsapi;
 
-import com.pumkins.dto.request.NewsReq;
 import com.pumkins.entity.News;
 import com.pumkins.newsapi.NewsApiClient;
 import com.pumkins.newsapi.callback.ArticlesResponseCallback;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
