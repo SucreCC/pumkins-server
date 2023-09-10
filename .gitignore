@@ -22,12 +22,13 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-fgmp-server-common/target/
-fgmp-server-backend/target/
-fgmp-server-frontkit/target/
+pumkins-server-common/target/
+pumkins-server-base/target/
 .idea/
 logs/
 *.iml
 data/
 #*.sql
 target/
+
+pumkins-server-base/src/main/resources/application.yml
