@@ -30,6 +30,9 @@ public class User {
     @Column(name = "icon", nullable = false)
     private String icon;
 
+    /**
+     * host,user,normal
+     */
     @Column(name = "username", nullable = false)
     private String username;
 

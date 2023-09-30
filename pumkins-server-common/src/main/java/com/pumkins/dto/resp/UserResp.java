@@ -19,6 +19,9 @@ public class UserResp {
     private String username;
     private String email;
     private String icon;
+    /**
+     * host,user,normal
+     */
     private String role;
 
     public static UserResp build(User user) {
