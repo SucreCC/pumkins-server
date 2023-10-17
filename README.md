@@ -77,6 +77,13 @@ docker rm container name
 docker rmi image name
 docker excc -it container name
 
+docker ps -a
+docker images
+docker container ls
+docker rm container name
+docker rmi image name
+docker excc -it container name
+
 ## Mysql
 
 ```
