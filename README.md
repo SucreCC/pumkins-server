@@ -91,3 +91,6 @@ docker run --name mysql -p 3306:3306
 -v /mysql/mysql/log:/var/log/mysql 
 -e MYSQL_ROOT_PASSWORD=***-d mysql:5.7.25
 ```
+
+
+docker run --name mysql -p 3306:3306 -v /mysql/mysql/data:/var/lib/mysql -v /mysql/mysql/config:/etc/mysql/conf.d -v /mysql/mysql/log:/var/log/mysql -e MYSQL_ROOT_PASSWORD=*** -d mysql:5.7.25
